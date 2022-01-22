@@ -5,9 +5,9 @@
 template <class Anytype>
 struct node
 {
-	Anytype data;		 // data to be stored
-	node<Anytype> *next; // the pointer pointing the next node
-	node<Anytype> *prev; // the pointer pointing the previous node
+	Anytype data;		// data to be stored
+	node<Anytype> *next; 	// the pointer pointing the next node
+	node<Anytype> *prev; 	// the pointer pointing the previous node
 };
 
 template <class Anytype>
