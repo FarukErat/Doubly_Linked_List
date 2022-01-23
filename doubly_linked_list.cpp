@@ -5,8 +5,9 @@ using namespace std;
 
 int main()
 {
-    DLList<int> l;
-    int choice, data, index;
+    DLList<double> l;
+    double data; // keep the type of data same with the type of the list
+    int choice, index;
 
     cout << "----------" << endl
          << "  [Menu]   " << endl
