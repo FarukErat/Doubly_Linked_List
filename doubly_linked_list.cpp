@@ -1,7 +1,7 @@
 #include <iostream>
 #include "DLL.h"
 
-#define TYPE double  // to keep the type of data same with the type of the list
+#define TYPE double  // in order to keep the type of data same with the type of the list
 
 using namespace std;
 
