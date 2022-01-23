@@ -19,6 +19,7 @@ private:
 	int sizeOfList = 0;
 
 public:
+	Anytype input;
 	DLList();
 	~DLList();
 	void append(Anytype data);
