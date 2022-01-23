@@ -22,6 +22,7 @@ int main()
              << "4. insert a value" << endl
              << "5. print the list forward" << endl
              << "6. print the list backward" << endl
+             << "7. the size of the list" << endl
              << "0. EXIT" << endl
              << "Enter your choice: ";
 
@@ -59,6 +60,9 @@ int main()
             break;
         case 6:
             l.RevDisplay();
+            break;
+        case 7:
+            cout << "The size: " << l.size();
             break;
         default:
             cout << "Invalid choice!" << endl
