@@ -1,12 +1,14 @@
 #include <iostream>
 #include "DLL.h"
 
+#define TYPE double  // to keep the type of data same with the type of the list
+
 using namespace std;
 
 int main()
 {
-    DLList<double> l;
-    double data; // keep the type of data same with the type of the list
+    DLList<TYPE> l;
+    TYPE data; // keep the type of data same with the type of the list
     int choice, index;
 
     cout << "----------" << endl
