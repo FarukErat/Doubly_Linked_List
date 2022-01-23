@@ -1,14 +1,11 @@
 #include <iostream>
 #include "DLL.h"
 
-#define TYPE double  // in order to keep the type of data same with the type of the list
-
 using namespace std;
 
 int main()
 {
-    DLList<TYPE> l;
-    TYPE data; // keep the type of data same with the type of the list
+    DLList<double> l;
     int choice, index;
 
     cout << "----------" << endl
@@ -36,8 +33,8 @@ int main()
             return 0;
         case 1:
             cout << "Enter a number to append: ";
-            cin >> data;
-            l.append(data);
+            cin >> l.input;
+            l.append(l.input);
             break;
         case 2:
             cout << "Enter an index to pop an element: ";
@@ -48,15 +45,15 @@ int main()
             cout << "Enter an index to change a value: ";
             cin >> index;
             cout << "Enter the new value: ";
-            cin >> data;
-            l.change(index, data);
+            cin >> l.input;
+            l.change(index, l.input);
             break;
         case 4:
             cout << "Enter an index to insert a value: ";
             cin >> index;
             cout << "Enter a new value: ";
-            cin >> data;
-            l.insert(index, data);
+            cin >> l.input;
+            l.insert(index, l.input);
             break;
         case 5:
             l.Display();
