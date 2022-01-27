@@ -31,7 +31,6 @@ public:
 	void delTail();
 	void pop(Anytype Pos);
 	int size();
-	bool isEmpty();
 	bool BoundCheck(Anytype pos);
 	void Display();
 	void RevDisplay();
