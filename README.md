@@ -1,5 +1,6 @@
 # Doubly Linked List
-##An implementation of doubly linked list with template. 
+An implementation of doubly linked list with template.
+--
 
 As you propably know, in cpp you must defince sizes of lists. 
 
