@@ -20,9 +20,10 @@ int main()
              << "2. remove a value" << endl
              << "3. change a value" << endl
              << "4. insert a value" << endl
-             << "5. print the list forward" << endl
-             << "6. print the list backward" << endl
-             << "7. the size of the list" << endl
+             << "5. get a value" << endl
+             << "6. print the list forward" << endl
+             << "7. print the list backward" << endl
+             << "8. the size of the list" << endl
              << "0. EXIT" << endl
              << "Enter your choice: ";
 
@@ -56,12 +57,17 @@ int main()
             l.insert(index, l.input);
             break;
         case 5:
-            l.Display();
+            cout << "Enter an index to get a value: ";
+            cin >> index;
+            cout << l.get(index);
             break;
         case 6:
-            l.RevDisplay();
+            l.Display();
             break;
         case 7:
+            l.RevDisplay();
+            break;
+        case 8:
             cout << "The size: " << l.size();
             break;
         default:
