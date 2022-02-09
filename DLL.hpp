@@ -5,9 +5,9 @@
 template <class Anytype>
 struct node
 {
-	Anytype data;		// data to be stored
-	node<Anytype> *next; 	// the pointer pointing the next node
-	node<Anytype> *prev; 	// the pointer pointing the previous node
+	Anytype data;		 // data to be stored
+	node<Anytype> *next; // the pointer pointing the next node
+	node<Anytype> *prev; // the pointer pointing the previous node
 };
 
 template <class Anytype>
@@ -18,10 +18,14 @@ private:
 	node<Anytype> *tail; // the address of the last node
 	int sizeOfList = 0;
 
+protected:
+	bool BoundCheck(Anytype pos);
+
 public:
 	Anytype input;
 	DLList();
 	~DLList();
+	Anytype get(int index);
 	void append(Anytype data);
 	void insert(Anytype pos, Anytype data);
 	void addHead(Anytype data);
@@ -31,7 +35,6 @@ public:
 	void delTail();
 	void pop(Anytype Pos);
 	int size();
-	bool BoundCheck(Anytype pos);
 	void Display();
 	void RevDisplay();
 };
@@ -64,6 +67,26 @@ DLList<Anytype>::~DLList()
 	}
 	delete ptr;
 	std::cout << "List has been destroyed." << std::endl;
+};
+
+template <class Anytype>
+Anytype DLList<Anytype>::get(int index)
+{
+	// check if the index is out of bound
+	if (BoundCheck(index) == false)
+	{
+		std::cout << "Index out of bound." << std::endl;
+		return 0;
+	}
+
+	// iterate through the list to find the index
+	node<Anytype> *ptr = new node<Anytype>;
+	ptr = head;
+	for (int i = 0; i < index; i++)
+	{
+		ptr = ptr->next;
+	}
+	return ptr->data;
 };
 
 template <class Anytype>
