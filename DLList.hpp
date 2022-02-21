@@ -332,6 +332,7 @@ class Stack
 private:
 	DLList<Anytype> l;
 	int sizeOfStack;
+
 public:
 	Anytype input;
 	Stack()
@@ -366,6 +367,7 @@ class Queue
 private:
 	DLList<Anytype> l;
 	int sizeOfQueue;
+
 public:
 	Anytype input;
 	Queue()
