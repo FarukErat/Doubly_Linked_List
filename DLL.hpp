@@ -19,7 +19,7 @@ private:
 	int sizeOfList = 0;
 
 protected:
-	bool BoundCheck(Anytype pos);
+	bool BoundCheck(int pos);
 
 public:
 	Anytype input;
@@ -27,16 +27,14 @@ public:
 	~DLList();
 	Anytype get(int index);
 	void append(Anytype data);
-	void insert(Anytype pos, Anytype data);
+	void insert(int pos, Anytype data);
 	void addHead(Anytype data);
 	void addTail(Anytype data);
-	void change(Anytype pos, Anytype data);
+	void change(int pos, Anytype data);
 	void delHead();
 	void delTail();
-	void pop(Anytype Pos);
+	void pop(int Pos);
 	int size();
-	void Display();
-	void RevDisplay();
 };
 
 template <class Anytype>
@@ -126,7 +124,7 @@ void DLList<Anytype>::append(Anytype data)
 };
 
 template <class Anytype>
-void DLList<Anytype>::insert(Anytype pos, Anytype data)
+void DLList<Anytype>::insert(int pos, Anytype data)
 {
 	node<Anytype> *temp = new node<Anytype>;
 	node<Anytype> *ahead = new node<Anytype>;
@@ -204,7 +202,7 @@ void DLList<Anytype>::addTail(Anytype data)
 }
 
 template <class Anytype>
-void DLList<Anytype>::change(Anytype pos, Anytype data)
+void DLList<Anytype>::change(int pos, Anytype data)
 {
 	node<Anytype> *curr = head;
 	// iterating to the position
@@ -271,7 +269,7 @@ void DLList<Anytype>::delTail()
 }
 
 template <class Anytype>
-void DLList<Anytype>::pop(Anytype pos)
+void DLList<Anytype>::pop(int pos)
 {
 	node<Anytype> *behind = new node<Anytype>;
 	node<Anytype> *ahead = new node<Anytype>;
@@ -312,31 +310,7 @@ int DLList<Anytype>::size()
 };
 
 template <class Anytype>
-void DLList<Anytype>::Display()
-{
-	node<Anytype> *curr = head;
-	// curr is itearated and printed
-	while (curr != nullptr)
-	{
-		std::cout << curr->data << " ";
-		curr = curr->next;
-	}
-};
-
-template <class Anytype>
-void DLList<Anytype>::RevDisplay()
-{
-	node<Anytype> *curr = tail;
-	// curr is itearated and printed
-	while (curr != nullptr)
-	{
-		std::cout << curr->data << " ";
-		curr = curr->prev;
-	}
-};
-
-template <class Anytype>
-bool DLList<Anytype>::BoundCheck(Anytype pos)
+bool DLList<Anytype>::BoundCheck(int pos)
 {
 	// checking if there is any gaps(NULL nodes)
 	node<Anytype> *now = head;
