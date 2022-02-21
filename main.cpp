@@ -1,5 +1,5 @@
 #include <iostream>
-#include "DLL.hpp"
+#include "DLList.hpp"
 
 using namespace std;
 
@@ -32,7 +32,7 @@ int main()
         case 0:
             return 0;
         case 1:
-            cout << "Enter a number to append: ";
+            cout << "Enter an element to append: ";
             cin >> l.input;
             l.append(l.input);
             break;
@@ -51,19 +51,26 @@ int main()
         case 4:
             cout << "Enter an index to insert a value: ";
             cin >> index;
-            cout << "Enter a new value: ";
+            cout << "Enter a new element: ";
             cin >> l.input;
             l.insert(index, l.input);
             break;
         case 5:
-            cout << "Enter an index to get a value: ";
+            cout << "Enter an index to get an element: ";
             cin >> index;
             cout << l.get(index);
             break;
         case 6:
-            for (int i = 0; i < l.size(); i++)
+            if (l.size() == 0)
             {
-                cout << l.get(i) << endl;
+                cout << "The list is empty." << endl;
+            }
+            else
+            {
+                for (int i = 0; i < l.size(); i++)
+                {
+                    cout << l.get(i) << " ";
+                }
             }
             break;
         case 8:
