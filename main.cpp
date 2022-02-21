@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    DLList<double> l;
+    DLList<string> l;
     int choice, index;
 
     cout << "----------" << endl
@@ -16,14 +16,13 @@ int main()
     {
         cout << endl
              << endl
-             << "1. add a value" << endl
-             << "2. remove a value" << endl
-             << "3. change a value" << endl
-             << "4. insert a value" << endl
-             << "5. get a value" << endl
-             << "6. print the list forward" << endl
-             << "7. print the list backward" << endl
-             << "8. the size of the list" << endl
+             << "1. add an element" << endl
+             << "2. remove an element" << endl
+             << "3. change an element" << endl
+             << "4. insert an element" << endl
+             << "5. get a spesific element" << endl
+             << "6. print the list" << endl
+             << "7. the size of the list" << endl
              << "0. EXIT" << endl
              << "Enter your choice: ";
 
@@ -62,10 +61,10 @@ int main()
             cout << l.get(index);
             break;
         case 6:
-            l.Display();
-            break;
-        case 7:
-            l.RevDisplay();
+            for (int i = 0; i < l.size(); i++)
+            {
+                cout << l.get(i) << endl;
+            }
             break;
         case 8:
             cout << "The size: " << l.size();
