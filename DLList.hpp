@@ -1,6 +1,6 @@
 #pragma once
-#ifndef DLL_H
-#define DLL_H
+#ifndef DLList_H
+#define DLList_H
 
 template <class Anytype>
 struct node
@@ -13,12 +13,10 @@ struct node
 template <class Anytype>
 class DLList
 {
-private:
+protected:
 	node<Anytype> *head; // the address of the first node
 	node<Anytype> *tail; // the address of the last node
-	int sizeOfList = 0;
-
-protected:
+	int sizeOfList;
 	bool BoundCheck(int pos);
 
 public:
@@ -42,6 +40,7 @@ DLList<Anytype>::DLList()
 {
 	head = nullptr;
 	tail = nullptr;
+	sizeOfList = 0;
 };
 
 template <class Anytype>
@@ -324,5 +323,74 @@ bool DLList<Anytype>::BoundCheck(int pos)
 	}
 	return true;
 }
+//! end of class DLList
 
-#endif //! DLL_H
+//! class Stack
+template <class Anytype>
+class Stack
+{
+private:
+	DLList<Anytype> l;
+	int sizeOfStack;
+public:
+	Anytype input;
+	Stack()
+	{
+		sizeOfStack = 0;
+	}
+	void push(Anytype data)
+	{
+		l.append(data);
+		sizeOfStack++;
+	}
+	void pop()
+	{
+		l.pop(sizeOfStack - 1);
+		sizeOfStack--;
+	}
+	int size()
+	{
+		return sizeOfStack;
+	}
+	Anytype get(int pos)
+	{
+		return l.get(pos);
+	}
+};
+//! end of class Stack
+
+//! class Queue
+template <class Anytype>
+class Queue
+{
+private:
+	DLList<Anytype> l;
+	int sizeOfQueue;
+public:
+	Anytype input;
+	Queue()
+	{
+		sizeOfQueue = 0;
+	}
+	void push(Anytype data)
+	{
+		l.append(data);
+		sizeOfQueue++;
+	}
+	void pop()
+	{
+		l.pop(0);
+		sizeOfQueue--;
+	}
+	int size()
+	{
+		return l.size();
+	}
+	Anytype get(int pos)
+	{
+		return l.get(pos);
+	}
+};
+//! end of class Queue
+
+#endif //! DLList_H
