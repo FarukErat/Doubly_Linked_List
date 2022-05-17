@@ -330,27 +330,20 @@ class Stack
 {
 private:
     DLList<Anytype> l;
-    int sizeOfStack;
 
 public:
     Anytype input;
-    Stack()
-    {
-        sizeOfStack = 0;
-    }
     void push(Anytype data)
     {
         l.append(data);
-        sizeOfStack++;
     }
     void pop()
     {
         l.pop(sizeOfStack - 1);
-        sizeOfStack--;
     }
-    int size()
+    int getSize()
     {
-        return sizeOfStack;
+        return l.sizeOfList;
     }
     Anytype get(int pos)
     {
@@ -365,27 +358,20 @@ class Queue
 {
 private:
     DLList<Anytype> l;
-    int sizeOfQueue;
 
 public:
     Anytype input;
-    Queue()
-    {
-        sizeOfQueue = 0;
-    }
     void push(Anytype data)
     {
         l.append(data);
-        sizeOfQueue++;
     }
     void pop()
     {
         l.pop(0);
-        sizeOfQueue--;
     }
-    int size()
+    int getSize()
     {
-        return l.getSize();
+        return l.sizeOfList;
     }
     Anytype get(int pos)
     {
