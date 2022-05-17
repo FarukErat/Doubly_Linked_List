@@ -33,7 +33,8 @@ public:
     void append(Anytype data);          // append a node at the end of the list
     void insert(int pos, Anytype data); // insert a node at the given index
     void change(int pos, Anytype data); // change the data of the node at the given index
-    void pop(int Pos);                  // delete the node at the given index
+    void pop(int pos);                  // delete the node at the given index
+    void pop();                         // delete the last node
     int getSize();                      // return the size of the list
 };
 
@@ -303,6 +304,12 @@ void DLList<Anytype>::pop(int pos)
 };
 
 template <class Anytype>
+void DLList<Anytype>::pop()
+{
+    pop(sizeOfList - 1);
+}
+
+template <class Anytype>
 int DLList<Anytype>::getSize()
 {
     return sizeOfList; // since size attribute is private
@@ -339,11 +346,11 @@ public:
     }
     void pop()
     {
-        l.pop(l.sizeOfList - 1);
+        l.pop();
     }
     int getSize()
     {
-        return l.sizeOfList;
+        return l.getSize();
     }
     Anytype get(int pos)
     {
@@ -371,7 +378,7 @@ public:
     }
     int getSize()
     {
-        return l.sizeOfList;
+        return l.getSize();
     }
     Anytype get(int pos)
     {
