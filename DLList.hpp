@@ -190,18 +190,13 @@ void DLList<Anytype>::addHead(Anytype data)
 template <class Anytype>
 void DLList<Anytype>::addTail(Anytype data)
 {
-    // a new node is created
-    node<Anytype> *newNode = new node<Anytype>;
-    // its data is assigned
-    newNode->data = data;
-    // the previous node of temp is assigned as tail
-    newNode->prev = tail;
-    // the next node of former tail node is assigned as temp
-    tail->next = newNode;
-    // the next node of temp node is assigned as nullptr
-    newNode->next = nullptr;
-    // tail node is updated
-    tail = newNode;
+
+    node<Anytype> *newNode = new node<Anytype>; // a new node is created
+    newNode->data = data;                       // its data is assigned
+    newNode->prev = tail;                       // the previous node of temp is assigned as tail
+    tail->next = newNode;                       // the next node of former tail node is assigned as temp
+    newNode->next = nullptr;                    // the next node of temp node is assigned as nullptr
+    tail = newNode;                             // tail node is updated
     sizeOfList++;
 }
 
@@ -214,8 +209,7 @@ void DLList<Anytype>::change(int pos, Anytype data)
     {
         curr = curr->next;
     }
-    // changing the data
-    curr->data = data;
+    curr->data = data; // changing the data
 }
 
 template <class Anytype>
@@ -235,12 +229,11 @@ void DLList<Anytype>::delHead()
     }
     else
     {
-        // head is moved one node further
-        temp = head->next;
+
+        temp = head->next; // head is moved one node further
         temp->prev = nullptr;
         delete head;
-        // head is updated to temp
-        head = temp;
+        head = temp; // head is updated to temp
         sizeOfList--;
     }
 };
@@ -262,12 +255,10 @@ void DLList<Anytype>::delTail()
     }
     else
     {
-        // tail is moved one node back
-        temp = tail->prev;
+        temp = tail->prev; // tail is moved one node back
         temp->next = nullptr;
         delete tail;
-        // tail is updated to temp
-        tail = temp;
+        tail = temp; // tail is updated to temp
         sizeOfList--;
     }
 }
@@ -308,22 +299,19 @@ void DLList<Anytype>::pop(int pos)
     ahead->next->prev = behind;
 
     delete ahead;
-
     sizeOfList--;
 };
 
 template <class Anytype>
 int DLList<Anytype>::getSize()
 {
-    // since size attribute is private
-    return sizeOfList;
+    return sizeOfList; // since size attribute is private
 };
 
 template <class Anytype>
 bool DLList<Anytype>::BoundCheck(int pos)
 {
-    // checking if there is any gaps(NULL nodes)
-    node<Anytype> *now = head;
+    node<Anytype> *now = head; // checking if there is any gaps(NULL nodes)
     for (int x = 0; x < pos; x++)
     {
         if (now == NULL)
