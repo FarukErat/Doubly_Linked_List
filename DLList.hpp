@@ -339,7 +339,7 @@ public:
     }
     void pop()
     {
-        l.pop(sizeOfStack - 1);
+        l.pop(l.sizeOfList - 1);
     }
     int getSize()
     {
