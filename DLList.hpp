@@ -53,7 +53,6 @@ DLList<Anytype>::~DLList()
     if (head == nullptr)
     {
         delete head;
-        std::cout << "List has been destroyed." << std::endl;
         return;
     }
 
@@ -68,7 +67,6 @@ DLList<Anytype>::~DLList()
         delete nodeToRemove; // delete the node to be removed
     }
     delete curr; // delete the last node
-    std::cout << "List has been destroyed." << std::endl;
 };
 
 template <class Anytype>
