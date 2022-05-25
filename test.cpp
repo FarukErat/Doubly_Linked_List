@@ -29,7 +29,7 @@ int main()
     q.pop();                                        // World and Universe
     q.pop();                                        // and Universe
     q.pop();                                        // Universe
-    cout << q.get(0) << " " << q.getSize() << endl; // Universe(0)
+    cout << q.get(0) << " " << q.Size() << endl; // Universe(0)
 
     // test on stacks
     Stack<string> s;
@@ -39,7 +39,7 @@ int main()
     s.push("Universe");                             // Hello World and Universe
     s.pop();                                        // Hello World and
     s.pop();                                        // Hello World
-    cout << s.get(0) << " " << s.getSize() << endl; // Hello(0) World(1)
+    cout << s.get(0) << " " << s.Size() << endl; // Hello(0) World(1)
 
     // test on lists
     DLList<string> l;
