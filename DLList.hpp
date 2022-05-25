@@ -346,7 +346,7 @@ public:
     {
         l.pop();
     }
-    int getSize()
+    int Size()
     {
         return l.Size();
     }
@@ -374,7 +374,7 @@ public:
     {
         l.pop(0);
     }
-    int getSize()
+    int Size()
     {
         return l.Size();
     }
