@@ -7,11 +7,11 @@ template <class Anytype>
  * @brief Monomere of the list structure
  * 
  */
-struct node
+struct Node
 {
     Anytype data;        // data to be stored
-    node<Anytype> *next; // the pointer pointing the next node
-    node<Anytype> *prev; // the pointer pointing the previous node
+    Node<Anytype> *next; // the pointer pointing the next node
+    Node<Anytype> *prev; // the pointer pointing the previous node
 };
 
 template <class Anytype>
@@ -23,8 +23,8 @@ class DLList
 {
 protected:
     int sizeOfList;
-    node<Anytype> *head; // the address of the first node
-    node<Anytype> *tail; // the address of the last node
+    Node<Anytype> *head; // the address of the first node
+    Node<Anytype> *tail; // the address of the last node
     /**
      * @brief checks if there is boundary violation
      *
@@ -134,8 +134,8 @@ DLList<Anytype>::~DLList()
         return;
     }
 
-    node<Anytype> *curr = new node<Anytype>;         // create a pointer to the current node
-    node<Anytype> *nodeToRemove = new node<Anytype>; // create a pointer to the node to be removed
+    Node<Anytype> *curr = new Node<Anytype>;         // create a pointer to the current node
+    Node<Anytype> *nodeToRemove = new Node<Anytype>; // create a pointer to the node to be removed
     curr = head;                                     // set the pointer to the head to start from the beginning
     // while the current node is not nullptr
     while (curr->next != nullptr)
@@ -158,7 +158,7 @@ Anytype DLList<Anytype>::get(int index)
     }
 
     // iterate through the list to find the index
-    node<Anytype> *ptr = new node<Anytype>;
+    Node<Anytype> *ptr = new Node<Anytype>;
     ptr = head; // set the pointer to the head to start from the beginning
     for (int i = 0; i < index; i++)
     {
@@ -171,7 +171,7 @@ template <class Anytype>
 void DLList<Anytype>::append(Anytype data)
 {
     // new node is created
-    node<Anytype> *newNode = new node<Anytype>;
+    Node<Anytype> *newNode = new Node<Anytype>;
 
     // new node is initialized
     newNode->data = data;
@@ -207,9 +207,9 @@ void DLList<Anytype>::insert(int pos, Anytype data)
         return;
     }
 
-    node<Anytype> *temp = new node<Anytype>;
-    node<Anytype> *ahead = new node<Anytype>;
-    node<Anytype> *behind = new node<Anytype>;
+    Node<Anytype> *temp = new Node<Anytype>;
+    Node<Anytype> *ahead = new Node<Anytype>;
+    Node<Anytype> *behind = new Node<Anytype>;
 
     // it means it is head, if position is 0
     if (pos == 0)
@@ -250,7 +250,7 @@ template <class Anytype>
 void DLList<Anytype>::addHead(Anytype data)
 {
     // a new node is created
-    node<Anytype> *temp = new node<Anytype>;
+    Node<Anytype> *temp = new Node<Anytype>;
     // its data is assigned
     temp->data = data;
     // the next node of temp is assigned as head
@@ -268,7 +268,7 @@ template <class Anytype>
 void DLList<Anytype>::addTail(Anytype data)
 {
 
-    node<Anytype> *newNode = new node<Anytype>; // a new node is created
+    Node<Anytype> *newNode = new Node<Anytype>; // a new node is created
     newNode->data = data;                       // its data is assigned
     newNode->prev = tail;                       // the previous node of temp is assigned as tail
     tail->next = newNode;                       // the next node of former tail node is assigned as temp
@@ -280,7 +280,7 @@ void DLList<Anytype>::addTail(Anytype data)
 template <class Anytype>
 void DLList<Anytype>::change(int pos, Anytype data)
 {
-    node<Anytype> *curr = head;
+    Node<Anytype> *curr = head;
     // iterating to the position
     for (int x = 0; x < pos; x++)
     {
@@ -292,7 +292,7 @@ void DLList<Anytype>::change(int pos, Anytype data)
 template <class Anytype>
 void DLList<Anytype>::delHead()
 {
-    node<Anytype> *temp = new node<Anytype>;
+    Node<Anytype> *temp = new Node<Anytype>;
     if (sizeOfList == 0)
     {
         std::cout << "Out of bound! From head." << std::endl;
@@ -318,7 +318,7 @@ void DLList<Anytype>::delHead()
 template <class Anytype>
 void DLList<Anytype>::delTail()
 {
-    node<Anytype> *temp = new node<Anytype>;
+    Node<Anytype> *temp = new Node<Anytype>;
     if (sizeOfList == 0)
     {
         std::cout << "Out of bound! From tail." << std::endl;
@@ -343,8 +343,8 @@ void DLList<Anytype>::delTail()
 template <class Anytype>
 void DLList<Anytype>::pop(int pos)
 {
-    node<Anytype> *behind = new node<Anytype>;
-    node<Anytype> *ahead = new node<Anytype>;
+    Node<Anytype> *behind = new Node<Anytype>;
+    Node<Anytype> *ahead = new Node<Anytype>;
     if (boundCheck(pos) == false)
     {
         std::cout << "Cant delete, out of range." << std::endl;
@@ -394,7 +394,7 @@ int DLList<Anytype>::Size()
 template <class Anytype>
 bool DLList<Anytype>::boundCheck(int pos)
 {
-    node<Anytype> *now = head; // checking if there is any gaps(NULL nodes)
+    Node<Anytype> *now = head; // checking if there is any gaps(NULL nodes)
     for (int x = 0; x < pos; x++)
     {
         if (now == NULL)
