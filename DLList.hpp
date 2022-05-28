@@ -5,7 +5,7 @@
 template <class Anytype>
 /**
  * @brief Monomere of the list structure
- * 
+ *
  */
 struct Node
 {
@@ -17,7 +17,7 @@ struct Node
 template <class Anytype>
 /**
  * @brief Doubly linked list of any type
- * 
+ *
  */
 class DLList
 {
@@ -109,6 +109,11 @@ public:
      */
     void pop();
     /**
+     * @brief prints the elements of the list
+     *
+     */
+    void printDLList();
+    /**
      * @brief returns the size of the list
      *
      * @return int
@@ -151,7 +156,7 @@ template <class Anytype>
 Anytype DLList<Anytype>::get(int index)
 {
     // check if the index is out of bound
-    if (boundCheck(index) == false)
+    if (index >= sizeOfList || boundCheck(index) == false)
     {
         std::cout << "Index out of bound." << std::endl;
         return 0;
@@ -384,6 +389,16 @@ void DLList<Anytype>::pop()
 {
     pop(sizeOfList - 1);
 }
+
+template <class Anytype>
+void DLList<Anytype>::printDLList()
+{
+    for (int x = 0; x < sizeOfList; x++)
+    {
+        std::cout << get(x) << " ";
+    }
+    std::cout << std::endl;
+};
 
 template <class Anytype>
 int DLList<Anytype>::Size()
