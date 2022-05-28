@@ -395,7 +395,10 @@ void DLList<Anytype>::printDLList(char delimiter)
 {
     for (int x = 0; x < sizeOfList; x++)
     {
-        std::cout << get(x) << delimiter;
+        std::cout << get(x);
+        if (x == sizeOfList - 1)
+            continue;
+        std::cout << delimiter;
     }
     std::cout << std::endl;
 };
