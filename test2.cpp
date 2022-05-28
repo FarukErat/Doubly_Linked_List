@@ -21,6 +21,7 @@ int main()
     l.pop();
     l.printDLList();
     cout << "Size: " << l.Size() << endl;
+    cout << "Last: " << l.get(l.Size() - 1) << endl;
 
     return 0;
 }
