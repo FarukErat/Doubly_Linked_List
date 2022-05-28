@@ -3,6 +3,10 @@
 #define DLList_H
 
 template <class Anytype>
+/**
+ * @brief Monomere of the list structure
+ * 
+ */
 struct node
 {
     Anytype data;        // data to be stored
@@ -11,31 +15,105 @@ struct node
 };
 
 template <class Anytype>
+/**
+ * @brief Doubly linked list of any type
+ * 
+ */
 class DLList
 {
 protected:
     int sizeOfList;
     node<Anytype> *head; // the address of the first node
     node<Anytype> *tail; // the address of the last node
-    bool BoundCheck(int pos);
+    /**
+     * @brief checks if there is boundary violation
+     *
+     * @param pos
+     * @return true
+     * @return false
+     */
+    bool boundCheck(int pos);
 
     // the following functions are not for public use
-    void addHead(Anytype data); // add a node at the beginning of the list
-    void addTail(Anytype data); // add a node at the end of the list
-    void delHead();             // delete the first node
-    void delTail();             // delete the last node
+    /**
+     * @brief adds a node at the beginning of the list
+     *
+     * @param data
+     */
+    void addHead(Anytype data);
+    /**
+     * @brief adds a node at the end of the list
+     *
+     * @param data
+     */
+    void addTail(Anytype data);
+    /**
+     * @brief deletes the first node
+     *
+     */
+    void delHead();
+    /**
+     * @brief deletes the last node
+     *
+     */
+    void delTail();
 
 public:
-    Anytype input;
-    DLList();                           // constructor
-    ~DLList();                          // destructor
-    Anytype get(int index);             // get the data of the node at the given index
-    void append(Anytype data);          // append a node at the end of the list
-    void insert(int pos, Anytype data); // insert a node at the given index
-    void change(int pos, Anytype data); // change the data of the node at the given index
-    void pop(int pos);                  // delete the node at the given index
-    void pop();                         // delete the last node
-    int Size();                         // return the size of the list
+    Anytype input; // for users not to have to declare a new variable while inputting
+    /**
+     * @brief Constructs a new DLList object
+     *
+     */
+    DLList();
+    /**
+     * @brief Destroys the DLList object
+     *
+     */
+    ~DLList();
+    /**
+     * @brief returns the data of the node at the given index
+     *
+     * @param index
+     * @return Anytype
+     */
+    Anytype get(int index);
+    /**
+     * @brief appends a node at the end of the list
+     *
+     * @param data
+     */
+    void append(Anytype data);
+    /**
+     * @brief inserts a node at the given index
+     *
+     * @param pos
+     * @param data
+     */
+    void insert(int pos, Anytype data);
+    /**
+     * @brief change the data of the node at the given index
+     *
+     * @param pos
+     * @param data
+     */
+    void change(int pos, Anytype data);
+    /**
+     * @brief deletes the node at the given index but does not return the data
+     *
+     * @param pos
+     */
+    void pop(int pos);
+    /**
+     * @brief deletes the last node
+     *
+     */
+    void pop();
+    /**
+     * @brief returns the size of the list
+     *
+     * @return int
+     */
+    int Size();
 };
 
 template <class Anytype>
@@ -73,7 +151,7 @@ template <class Anytype>
 Anytype DLList<Anytype>::get(int index)
 {
     // check if the index is out of bound
-    if (BoundCheck(index) == false)
+    if (boundCheck(index) == false)
     {
         std::cout << "Index out of bound." << std::endl;
         return 0;
@@ -123,7 +201,7 @@ template <class Anytype>
 void DLList<Anytype>::insert(int pos, Anytype data)
 {
     // if the position is out range
-    if (BoundCheck(pos) == false)
+    if (boundCheck(pos) == false)
     {
         std::cout << "Cant add from out of range." << std::endl;
         return;
@@ -267,7 +345,7 @@ void DLList<Anytype>::pop(int pos)
 {
     node<Anytype> *behind = new node<Anytype>;
     node<Anytype> *ahead = new node<Anytype>;
-    if (BoundCheck(pos) == false)
+    if (boundCheck(pos) == false)
     {
         std::cout << "Cant delete, out of range." << std::endl;
         return;
@@ -314,7 +392,7 @@ int DLList<Anytype>::Size()
 };
 
 template <class Anytype>
-bool DLList<Anytype>::BoundCheck(int pos)
+bool DLList<Anytype>::boundCheck(int pos)
 {
     node<Anytype> *now = head; // checking if there is any gaps(NULL nodes)
     for (int x = 0; x < pos; x++)
