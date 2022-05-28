@@ -112,7 +112,7 @@ public:
      * @brief prints the elements of the list
      *
      */
-    void printDLList();
+    void printDLList(char delimiter = ' ');
     /**
      * @brief returns the size of the list
      *
@@ -391,11 +391,11 @@ void DLList<Anytype>::pop()
 }
 
 template <class Anytype>
-void DLList<Anytype>::printDLList()
+void DLList<Anytype>::printDLList(char delimiter)
 {
     for (int x = 0; x < sizeOfList; x++)
     {
-        std::cout << get(x) << " ";
+        std::cout << get(x) << delimiter;
     }
     std::cout << std::endl;
 };
