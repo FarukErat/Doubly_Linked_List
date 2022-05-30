@@ -119,7 +119,7 @@ public:
      * @return int
      */
     int Size();
-    template <class U> // in order not to shadow the function in the class
+    template <class U> // different type name in order to avoid shadowing the function in the class
     friend std::ostream &operator<<(std::ostream &out, DLList<U> &list);
 };
 
@@ -324,7 +324,6 @@ void DLList<T>::delHead()
     }
     else
     {
-
         temp = head->next; // head is moved one node further
         temp->prev = nullptr;
         delete head;
@@ -450,9 +449,20 @@ public:
     {
         return l.get(pos);
     }
+    template <class U> // different type name in order to avoid shadowing the function in the class
+    friend std::ostream &operator<<(std::ostream &out, Stack<U> &list);
 };
 //! end of class Stack
-
+template <class T>
+std::ostream &operator<<(std::ostream &out, Stack<T> &list)
+{
+    for (int i = 0; i < list.Size(); i++)
+    {
+        out << list.get(i) << ' ';
+    }
+    out << std::endl;
+    return out;
+}
 //! class Queue
 template <class T>
 class Queue
@@ -478,7 +488,18 @@ public:
     {
         return l.get(pos);
     }
+    template <class U> // different type name in order to avoid shadowing the function in the class
+    friend std::ostream &operator<<(std::ostream &out, Queue<U> &list);
 };
 //! end of class Queue
-
+template <class T>
+std::ostream &operator<<(std::ostream &out, Queue<T> &list)
+{
+    for (int i = 0; i < list.Size(); i++)
+    {
+        out << list.get(i) << ' ';
+    }
+    out << std::endl;
+    return out;
+}
 #endif //! DLList_H
