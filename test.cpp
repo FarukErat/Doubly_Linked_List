@@ -22,24 +22,26 @@ int main()
 {
     // test on queues
     Queue<string> q;
-    q.push("Hello");                                // Hello
-    q.push("World");                                // Hello World
-    q.push("and");                                  // Hello World and
-    q.push("Universe");                             // Hello World and Universe
-    q.pop();                                        // World and Universe
-    q.pop();                                        // and Universe
-    q.pop();                                        // Universe
+    q.push("Hello");                             // Hello
+    q.push("World");                             // Hello World
+    q.push("and");                               // Hello World and
+    q.push("Universe");                          // Hello World and Universe
+    q.pop();                                     // World and Universe
+    q.pop();                                     // and Universe
+    q.pop();                                     // Universe
     cout << q.get(0) << " " << q.Size() << endl; // Universe(0)
+    cout << q;                                   // Universe
 
     // test on stacks
     Stack<string> s;
-    s.push("Hello");                                // Hello
-    s.push("World");                                // Hello World
-    s.push("and");                                  // Hello World and
-    s.push("Universe");                             // Hello World and Universe
-    s.pop();                                        // Hello World and
-    s.pop();                                        // Hello World
+    s.push("Hello");                             // Hello
+    s.push("World");                             // Hello World
+    s.push("and");                               // Hello World and
+    s.push("Universe");                          // Hello World and Universe
+    s.pop();                                     // Hello World and
+    s.pop();                                     // Hello World
     cout << s.get(0) << " " << s.Size() << endl; // Hello(0) World(1)
+    cout << s;                                   // Hello World
 
     // test on lists
     DLList<string> l;
@@ -51,6 +53,7 @@ int main()
     l.change(1, "Mars");                         // Hello Mars and
     l.pop(1);                                    // Hello and
     cout << l.get(1) << " " << l.Size() << endl; // Hello(0) and(1)
+    cout << l;                                   // Hello and
 
     // test on function lists
     DLList<void (*)(int, int)> funcs;
@@ -62,6 +65,7 @@ int main()
     funcs.get(1)(0, 5); // call second function with 0 and 5
     funcs.get(0)(3, 1); // call first function with 3 and 1
     funcs.get(2)(7, 2); // call third function with 7 and 5
+    cout << funcs;
 
     return 0;
 }
