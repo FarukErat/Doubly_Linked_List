@@ -2,19 +2,19 @@
 #ifndef DLList_H
 #define DLList_H
 
-template <class Anytype>
+template <class T>
 /**
  * @brief Monomere of the list structure
  *
  */
 struct Node
 {
-    Anytype data;        // data to be stored
-    Node<Anytype> *next; // the pointer pointing the next node
-    Node<Anytype> *prev; // the pointer pointing the previous node
+    T data;        // data to be stored
+    Node<T> *next; // the pointer pointing the next node
+    Node<T> *prev; // the pointer pointing the previous node
 };
 
-template <class Anytype>
+template <class T>
 /**
  * @brief Doubly linked list of any type
  *
@@ -23,8 +23,8 @@ class DLList
 {
 protected:
     int sizeOfList;
-    Node<Anytype> *head; // the address of the first node
-    Node<Anytype> *tail; // the address of the last node
+    Node<T> *head; // the address of the first node
+    Node<T> *tail; // the address of the last node
     /**
      * @brief checks if there is boundary violation
      *
@@ -40,13 +40,13 @@ protected:
      *
      * @param data
      */
-    void addHead(Anytype data);
+    void addHead(T data);
     /**
      * @brief adds a node at the end of the list
      *
      * @param data
      */
-    void addTail(Anytype data);
+    void addTail(T data);
     /**
      * @brief deletes the first node
      *
@@ -59,7 +59,7 @@ protected:
     void delTail();
 
 public:
-    Anytype input; // for users not to have to declare a new variable while inputting
+    T input; // for users not to have to declare a new variable while inputting
     /**
      * @brief Constructs a new DLList object
      *
@@ -74,29 +74,29 @@ public:
      * @brief returns the data of the node at the given index
      *
      * @param index
-     * @return Anytype
+     * @return T
      */
-    Anytype get(int index);
+    T get(int index);
     /**
      * @brief appends a node at the end of the list
      *
      * @param data
      */
-    void append(Anytype data);
+    void append(T data);
     /**
      * @brief inserts a node at the given index
      *
      * @param pos
      * @param data
      */
-    void insert(int pos, Anytype data);
+    void insert(int pos, T data);
     /**
      * @brief change the data of the node at the given index
      *
      * @param pos
      * @param data
      */
-    void change(int pos, Anytype data);
+    void change(int pos, T data);
     /**
      * @brief deletes the node at the given index but does not return the data
      *
@@ -119,18 +119,31 @@ public:
      * @return int
      */
     int Size();
+    template <class U> // in order not to shadow the function in the class
+    friend std::ostream &operator<<(std::ostream &out, DLList<U> &list);
 };
 
-template <class Anytype>
-DLList<Anytype>::DLList()
+template <class T>
+std::ostream &operator<<(std::ostream &out, DLList<T> &list)
+{
+    for (int i = 0; i < list.Size(); i++)
+    {
+        out << list.get(i) << ' ';
+    }
+    out << std::endl;
+    return out;
+}
+
+template <class T>
+DLList<T>::DLList()
 {
     sizeOfList = 0; // initialize the size of the list to 0
     head = nullptr; // initialize the head pointer to nullptr
     tail = nullptr; // initialize the tail pointer to nullptr
 };
 
-template <class Anytype>
-DLList<Anytype>::~DLList()
+template <class T>
+DLList<T>::~DLList()
 {
     // if head is nullptr, then head is the tail and they are all to be deleted
     if (head == nullptr)
@@ -139,9 +152,9 @@ DLList<Anytype>::~DLList()
         return;
     }
 
-    Node<Anytype> *curr = new Node<Anytype>;         // create a pointer to the current node
-    Node<Anytype> *nodeToRemove = new Node<Anytype>; // create a pointer to the node to be removed
-    curr = head;                                     // set the pointer to the head to start from the beginning
+    Node<T> *curr = new Node<T>;         // create a pointer to the current node
+    Node<T> *nodeToRemove = new Node<T>; // create a pointer to the node to be removed
+    curr = head;                         // set the pointer to the head to start from the beginning
     // while the current node is not nullptr
     while (curr->next != nullptr)
     {
@@ -152,8 +165,8 @@ DLList<Anytype>::~DLList()
     delete curr; // delete the last node
 };
 
-template <class Anytype>
-Anytype DLList<Anytype>::get(int index)
+template <class T>
+T DLList<T>::get(int index)
 {
     // check if the index is out of bound
     if (index >= sizeOfList || boundCheck(index) == false)
@@ -163,7 +176,7 @@ Anytype DLList<Anytype>::get(int index)
     }
 
     // iterate through the list to find the index
-    Node<Anytype> *ptr = new Node<Anytype>;
+    Node<T> *ptr = new Node<T>;
     ptr = head; // set the pointer to the head to start from the beginning
     for (int i = 0; i < index; i++)
     {
@@ -172,11 +185,11 @@ Anytype DLList<Anytype>::get(int index)
     return ptr->data; // return the data of the node
 };
 
-template <class Anytype>
-void DLList<Anytype>::append(Anytype data)
+template <class T>
+void DLList<T>::append(T data)
 {
     // new node is created
-    Node<Anytype> *newNode = new Node<Anytype>;
+    Node<T> *newNode = new Node<T>;
 
     // new node is initialized
     newNode->data = data;
@@ -202,8 +215,8 @@ void DLList<Anytype>::append(Anytype data)
     sizeOfList++;
 };
 
-template <class Anytype>
-void DLList<Anytype>::insert(int pos, Anytype data)
+template <class T>
+void DLList<T>::insert(int pos, T data)
 {
     // if the position is out range
     if (boundCheck(pos) == false)
@@ -212,9 +225,9 @@ void DLList<Anytype>::insert(int pos, Anytype data)
         return;
     }
 
-    Node<Anytype> *temp = new Node<Anytype>;
-    Node<Anytype> *ahead = new Node<Anytype>;
-    Node<Anytype> *behind = new Node<Anytype>;
+    Node<T> *temp = new Node<T>;
+    Node<T> *ahead = new Node<T>;
+    Node<T> *behind = new Node<T>;
 
     // it means it is head, if position is 0
     if (pos == 0)
@@ -251,11 +264,11 @@ void DLList<Anytype>::insert(int pos, Anytype data)
     sizeOfList++;
 };
 
-template <class Anytype>
-void DLList<Anytype>::addHead(Anytype data)
+template <class T>
+void DLList<T>::addHead(T data)
 {
     // a new node is created
-    Node<Anytype> *temp = new Node<Anytype>;
+    Node<T> *temp = new Node<T>;
     // its data is assigned
     temp->data = data;
     // the next node of temp is assigned as head
@@ -269,23 +282,23 @@ void DLList<Anytype>::addHead(Anytype data)
     sizeOfList++;
 };
 
-template <class Anytype>
-void DLList<Anytype>::addTail(Anytype data)
+template <class T>
+void DLList<T>::addTail(T data)
 {
 
-    Node<Anytype> *newNode = new Node<Anytype>; // a new node is created
-    newNode->data = data;                       // its data is assigned
-    newNode->prev = tail;                       // the previous node of temp is assigned as tail
-    tail->next = newNode;                       // the next node of former tail node is assigned as temp
-    newNode->next = nullptr;                    // the next node of temp node is assigned as nullptr
-    tail = newNode;                             // tail node is updated
+    Node<T> *newNode = new Node<T>; // a new node is created
+    newNode->data = data;           // its data is assigned
+    newNode->prev = tail;           // the previous node of temp is assigned as tail
+    tail->next = newNode;           // the next node of former tail node is assigned as temp
+    newNode->next = nullptr;        // the next node of temp node is assigned as nullptr
+    tail = newNode;                 // tail node is updated
     sizeOfList++;
 }
 
-template <class Anytype>
-void DLList<Anytype>::change(int pos, Anytype data)
+template <class T>
+void DLList<T>::change(int pos, T data)
 {
-    Node<Anytype> *curr = head;
+    Node<T> *curr = head;
     // iterating to the position
     for (int x = 0; x < pos; x++)
     {
@@ -294,10 +307,10 @@ void DLList<Anytype>::change(int pos, Anytype data)
     curr->data = data; // changing the data
 }
 
-template <class Anytype>
-void DLList<Anytype>::delHead()
+template <class T>
+void DLList<T>::delHead()
 {
-    Node<Anytype> *temp = new Node<Anytype>;
+    Node<T> *temp = new Node<T>;
     if (sizeOfList == 0)
     {
         std::cout << "Out of bound! From head." << std::endl;
@@ -320,10 +333,10 @@ void DLList<Anytype>::delHead()
     }
 };
 
-template <class Anytype>
-void DLList<Anytype>::delTail()
+template <class T>
+void DLList<T>::delTail()
 {
-    Node<Anytype> *temp = new Node<Anytype>;
+    Node<T> *temp = new Node<T>;
     if (sizeOfList == 0)
     {
         std::cout << "Out of bound! From tail." << std::endl;
@@ -345,11 +358,11 @@ void DLList<Anytype>::delTail()
     }
 }
 
-template <class Anytype>
-void DLList<Anytype>::pop(int pos)
+template <class T>
+void DLList<T>::pop(int pos)
 {
-    Node<Anytype> *behind = new Node<Anytype>;
-    Node<Anytype> *ahead = new Node<Anytype>;
+    Node<T> *behind = new Node<T>;
+    Node<T> *ahead = new Node<T>;
     if (boundCheck(pos) == false)
     {
         std::cout << "Cant delete, out of range." << std::endl;
@@ -384,35 +397,22 @@ void DLList<Anytype>::pop(int pos)
     sizeOfList--;
 };
 
-template <class Anytype>
-void DLList<Anytype>::pop()
+template <class T>
+void DLList<T>::pop()
 {
     pop(sizeOfList - 1);
-}
-
-template <class Anytype>
-void DLList<Anytype>::printDLList(char delimiter)
-{
-    for (int x = 0; x < sizeOfList; x++)
-    {
-        std::cout << get(x);
-        if (x == sizeOfList - 1)
-            continue;
-        std::cout << delimiter;
-    }
-    std::cout << std::endl;
 };
 
-template <class Anytype>
-int DLList<Anytype>::Size()
+template <class T>
+int DLList<T>::Size()
 {
     return sizeOfList; // since size attribute is private
 };
 
-template <class Anytype>
-bool DLList<Anytype>::boundCheck(int pos)
+template <class T>
+bool DLList<T>::boundCheck(int pos)
 {
-    Node<Anytype> *now = head; // checking if there is any gaps(NULL nodes)
+    Node<T> *now = head; // checking if there is any gaps(NULL nodes)
     for (int x = 0; x < pos; x++)
     {
         if (now == NULL)
@@ -426,15 +426,15 @@ bool DLList<Anytype>::boundCheck(int pos)
 //! end of class DLList
 
 //! class Stack
-template <class Anytype>
+template <class T>
 class Stack
 {
 private:
-    DLList<Anytype> l;
+    DLList<T> l;
 
 public:
-    Anytype input;
-    void push(Anytype data)
+    T input;
+    void push(T data)
     {
         l.append(data);
     }
@@ -446,7 +446,7 @@ public:
     {
         return l.Size();
     }
-    Anytype get(int pos)
+    T get(int pos)
     {
         return l.get(pos);
     }
@@ -454,15 +454,15 @@ public:
 //! end of class Stack
 
 //! class Queue
-template <class Anytype>
+template <class T>
 class Queue
 {
 private:
-    DLList<Anytype> l;
+    DLList<T> l;
 
 public:
-    Anytype input;
-    void push(Anytype data)
+    T input;
+    void push(T data)
     {
         l.append(data);
     }
@@ -474,7 +474,7 @@ public:
     {
         return l.Size();
     }
-    Anytype get(int pos)
+    T get(int pos)
     {
         return l.get(pos);
     }
