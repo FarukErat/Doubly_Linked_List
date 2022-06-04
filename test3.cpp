@@ -7,15 +7,15 @@ int main()
 {
     // list of ints
     DLList<int> list1;
-    list1.append(456);
+    list1 += 456;
 
     // list of pointers to lists of ints
     DLList<DLList<int> *> list2;
-    list2.append(&list1);
+    list2 += &list1;
 
     // list pointers to lists of pointers to lists of ints
     DLList<DLList<DLList<int> *> *> list3;
-    list3.append(&list2);
+    list3 += &list2;
 
     cout << *list3[0][0][0];
     /* prints 1
