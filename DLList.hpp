@@ -84,8 +84,23 @@ public:
      * @param data
      */
     void operator+=(T data);
+    /**
+     * @brief overloads the += operator to append a list to the list
+     *
+     * @param l
+     */
     void operator+=(std::initializer_list<T> const l);
+    /**
+     * @brief clones the list
+     *
+     * @param list
+     */
     void operator=(DLList<T> &list);
+    /**
+     * @brief resets the list and appends a list to the list
+     *
+     * @param l
+     */
     void operator=(std::initializer_list<T> const l);
     /**
      * @brief overloads the += operator to appened to the list
@@ -129,8 +144,23 @@ public:
      * @return int
      */
     int Size();
+    /**
+     * @brief enables the user to print list with ease
+     *
+     * @param out
+     * @param list
+     *
+     * @return std::ostream&
+     */
     template <class U> // different type name in order to avoid shadowing the function in the class
     friend std::ostream &operator<<(std::ostream &out, DLList<U> &list);
+    /**
+     * @brief enables user to imput and append to the list with ease
+     *
+     * @param in
+     * @param list
+     * @return std::istream&
+     */
     template <class U>
     friend std::istream &operator>>(std::istream &in, DLList<U> &list);
 };
