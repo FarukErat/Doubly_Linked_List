@@ -65,6 +65,7 @@ public:
      *
      */
     DLList();
+    DLList(std::initializer_list<T> const l);
     /**
      * @brief Destroys the DLList object
      *
@@ -83,7 +84,9 @@ public:
      * @param data
      */
     void operator+=(T data);
+    void operator+=(std::initializer_list<T> const l);
     void operator=(DLList<T> &list);
+    void operator=(std::initializer_list<T> const l);
     /**
      * @brief overloads the += operator to appened to the list
      *
@@ -128,6 +131,8 @@ public:
     int Size();
     template <class U> // different type name in order to avoid shadowing the function in the class
     friend std::ostream &operator<<(std::ostream &out, DLList<U> &list);
+    template <class U>
+    friend std::istream &operator>>(std::istream &in, DLList<U> &list);
 };
 
 template <class T>
@@ -144,9 +149,29 @@ void DLList<T>::operator=(DLList<T> &list)
 };
 
 template <class T>
+void DLList<T>::operator=(std::initializer_list<T> const l)
+{
+    this->~DLList();                          // deallocate the memory of the current list
+    DLList<T> *temp = new (this) DLList<T>(); // reconstruct the list
+    for (auto i : l)
+    {
+        this->append(i); // append the elements of the list
+    }
+};
+
+template <class T>
 void DLList<T>::operator+=(T data)
 {
     this->append(data);
+};
+
+template <class T>
+void DLList<T>::operator+=(std::initializer_list<T> const l)
+{
+    for (auto i : l)
+    {
+        this->append(i);
+    }
 };
 
 template <class T>
@@ -161,11 +186,32 @@ std::ostream &operator<<(std::ostream &out, DLList<T> &list)
 }
 
 template <class T>
+std::istream &operator>>(std::istream &in, DLList<T> &list)
+{
+    T data;
+    in >> data;
+    list.append(data);
+    return in;
+}
+
+template <class T>
 DLList<T>::DLList()
 {
     sizeOfList = 0; // initialize the size of the list to 0
     head = nullptr; // initialize the head pointer to nullptr
     tail = nullptr; // initialize the tail pointer to nullptr
+};
+
+template <class T>
+DLList<T>::DLList(std::initializer_list<T> const l)
+{
+    sizeOfList = 0; // initialize the size of the list to 0
+    head = nullptr; // initialize the head pointer to nullptr
+    tail = nullptr; // initialize the tail pointer to nullptr
+    for (auto i : l)
+    {
+        this->append(i);
+    }
 };
 
 template <class T>
@@ -308,7 +354,6 @@ void DLList<T>::addHead(T data)
 template <class T>
 void DLList<T>::addTail(T data)
 {
-
     Node<T> *newNode = new Node<T>; // a new node is created
     newNode->data = data;           // its data is assigned
     newNode->prev = tail;           // the previous node of temp is assigned as tail
@@ -449,85 +494,5 @@ bool DLList<T>::boundCheck(int pos)
         now = now->next;
     }
     return true;
-}
-//! end of class DLList
-
-//! class Stack
-template <class T>
-class Stack
-{
-private:
-    DLList<T> l;
-
-public:
-    T input;
-    void push(T data)
-    {
-        l.append(data);
-    }
-    void pop()
-    {
-        l.pop();
-    }
-    int Size()
-    {
-        return l.Size();
-    }
-    T &operator[](int pos)
-    {
-        return l[pos];
-    }
-    template <class U> // different type name in order to avoid shadowing the function in the class
-    friend std::ostream &operator<<(std::ostream &out, Stack<U> &list);
 };
-//! end of class Stack
-template <class T>
-std::ostream &operator<<(std::ostream &out, Stack<T> &list)
-{
-    for (int i = 0; i < list.Size(); i++)
-    {
-        out << list[i] << ' ';
-    }
-    out << std::endl;
-    return out;
-}
-//! class Queue
-template <class T>
-class Queue
-{
-private:
-    DLList<T> l;
-
-public:
-    T input;
-    void push(T data)
-    {
-        l.append(data);
-    }
-    void pop()
-    {
-        l.pop(0);
-    }
-    int Size()
-    {
-        return l.Size();
-    }
-    T &operator[](int pos)
-    {
-        return l[pos];
-    }
-    template <class U> // different type name in order to avoid shadowing the function in the class
-    friend std::ostream &operator<<(std::ostream &out, Queue<U> &list);
-};
-//! end of class Queue
-template <class T>
-std::ostream &operator<<(std::ostream &out, Queue<T> &list)
-{
-    for (int i = 0; i < list.Size(); i++)
-    {
-        out << list[i] << ' ';
-    }
-    out << std::endl;
-    return out;
-}
 #endif //! DLList_H
