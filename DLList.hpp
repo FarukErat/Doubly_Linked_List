@@ -116,13 +116,6 @@ public:
      */
     void insert(int pos, T data);
     /**
-     * @brief change the data of the node at the given index
-     *
-     * @param pos
-     * @param data
-     */
-    void change(int pos, T data);
-    /**
      * @brief deletes the node at the given index but does not return the data
      *
      * @param pos
@@ -213,7 +206,7 @@ std::ostream &operator<<(std::ostream &out, DLList<T> &list)
     }
     out << std::endl;
     return out;
-}
+};
 
 template <class T>
 std::istream &operator>>(std::istream &in, DLList<T> &list)
@@ -222,7 +215,7 @@ std::istream &operator>>(std::istream &in, DLList<T> &list)
     in >> data;
     list.append(data);
     return in;
-}
+};
 
 template <class T>
 DLList<T>::DLList()
@@ -391,25 +384,7 @@ void DLList<T>::addTail(T data)
     newNode->next = nullptr;        // the next node of temp node is assigned as nullptr
     tail = newNode;                 // tail node is updated
     sizeOfList++;
-}
-
-template <class T>
-void DLList<T>::change(int pos, T data)
-{
-    // if the position is out range
-    if (pos < 0 || pos > sizeOfList - 1 || boundCheck(pos) == false)
-    {
-        throw std::out_of_range("Cannot change out of range.");
-    }
-
-    Node<T> *curr = head;
-    // iterating to the position
-    for (int x = 0; x < pos; x++)
-    {
-        curr = curr->next;
-    }
-    curr->data = data; // changing the data
-}
+};
 
 template <class T>
 void DLList<T>::delHead()
@@ -459,7 +434,7 @@ void DLList<T>::delTail()
         tail = temp; // tail is updated to temp
         sizeOfList--;
     }
-}
+};
 
 template <class T>
 void DLList<T>::pop(int pos)
