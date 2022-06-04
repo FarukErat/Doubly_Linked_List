@@ -78,11 +78,12 @@ public:
      */
     T operator[](int index);
     /**
-     * @brief overloads the = operator to set the list
+     * @brief overloads the += operator to append to the list
      *
      * @param data
      */
     void operator+=(T data);
+    void operator=(DLList<T> &list);
     /**
      * @brief overloads the += operator to appened to the list
      *
@@ -127,6 +128,17 @@ public:
     int Size();
     template <class U> // different type name in order to avoid shadowing the function in the class
     friend std::ostream &operator<<(std::ostream &out, DLList<U> &list);
+};
+
+template <class T>
+void DLList<T>::operator=(DLList<T> &list)
+{
+    this->~DLList();                          // deallocate the memory of the current list
+    DLList<T> *temp = new (this) DLList<T>(); // reconstruct the list
+    for (int i = 0; i < list.Size(); i++)
+    {
+        this->append(list[i]); // append the elements of the list
+    }
 };
 
 template <class T>
