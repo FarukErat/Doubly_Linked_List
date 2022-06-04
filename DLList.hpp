@@ -76,9 +76,15 @@ public:
      * @param index
      * @return T
      */
-    T get(int index);
+    T operator[](int index);
     /**
-     * @brief appends a node at the end of the list
+     * @brief overloads the = operator to set the list
+     *
+     * @param data
+     */
+    void operator+=(T data);
+    /**
+     * @brief overloads the += operator to appened to the list
      *
      * @param data
      */
@@ -124,11 +130,17 @@ public:
 };
 
 template <class T>
+void DLList<T>::operator+=(T data)
+{
+    this->append(data);
+};
+
+template <class T>
 std::ostream &operator<<(std::ostream &out, DLList<T> &list)
 {
     for (int i = 0; i < list.Size(); i++)
     {
-        out << list.get(i) << ' ';
+        out << list[i] << ' ';
     }
     out << std::endl;
     return out;
@@ -166,7 +178,7 @@ DLList<T>::~DLList()
 };
 
 template <class T>
-T DLList<T>::get(int index)
+T DLList<T>::operator[](int index)
 {
     // check if the index is out of bound
     if (index >= sizeOfList || boundCheck(index) == false)
@@ -176,8 +188,7 @@ T DLList<T>::get(int index)
     }
 
     // iterate through the list to find the index
-    Node<T> *ptr = new Node<T>;
-    ptr = head; // set the pointer to the head to start from the beginning
+    Node<T> *ptr = head; // set the pointer to the head to start from the beginning
     for (int i = 0; i < index; i++)
     {
         ptr = ptr->next; // move the pointer to the next node
@@ -445,9 +456,9 @@ public:
     {
         return l.Size();
     }
-    T get(int pos)
+    T operator[](int pos)
     {
-        return l.get(pos);
+        return l[pos];
     }
     template <class U> // different type name in order to avoid shadowing the function in the class
     friend std::ostream &operator<<(std::ostream &out, Stack<U> &list);
@@ -458,7 +469,7 @@ std::ostream &operator<<(std::ostream &out, Stack<T> &list)
 {
     for (int i = 0; i < list.Size(); i++)
     {
-        out << list.get(i) << ' ';
+        out << list[i] << ' ';
     }
     out << std::endl;
     return out;
@@ -484,9 +495,9 @@ public:
     {
         return l.Size();
     }
-    T get(int pos)
+    T operator[](int pos)
     {
-        return l.get(pos);
+        return l[pos];
     }
     template <class U> // different type name in order to avoid shadowing the function in the class
     friend std::ostream &operator<<(std::ostream &out, Queue<U> &list);
@@ -497,7 +508,7 @@ std::ostream &operator<<(std::ostream &out, Queue<T> &list)
 {
     for (int i = 0; i < list.Size(); i++)
     {
-        out << list.get(i) << ' ';
+        out << list[i] << ' ';
     }
     out << std::endl;
     return out;
