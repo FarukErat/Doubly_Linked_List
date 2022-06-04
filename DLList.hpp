@@ -133,6 +133,8 @@ public:
 template <class T>
 void DLList<T>::operator=(DLList<T> &list)
 {
+    if (this == &list)
+        return;
     this->~DLList();                          // deallocate the memory of the current list
     DLList<T> *temp = new (this) DLList<T>(); // reconstruct the list
     for (int i = 0; i < list.Size(); i++)
