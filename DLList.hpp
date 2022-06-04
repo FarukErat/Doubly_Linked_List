@@ -76,7 +76,7 @@ public:
      * @param index
      * @return T
      */
-    T operator[](int index);
+    T &operator[](int index);
     /**
      * @brief overloads the += operator to append to the list
      *
@@ -192,13 +192,12 @@ DLList<T>::~DLList()
 };
 
 template <class T>
-T DLList<T>::operator[](int index)
+T &DLList<T>::operator[](int index)
 {
     // check if the index is out of bound
     if (index >= sizeOfList || boundCheck(index) == false)
     {
-        std::cout << "Index out of bound." << std::endl;
-        return 0;
+        throw std::out_of_range("Index out of bound.");
     }
 
     // iterate through the list to find the index
@@ -244,10 +243,9 @@ template <class T>
 void DLList<T>::insert(int pos, T data)
 {
     // if the position is out range
-    if (boundCheck(pos) == false)
+    if (pos < 0 || pos > sizeOfList || boundCheck(pos) == false)
     {
-        std::cout << "Cant add from out of range." << std::endl;
-        return;
+        throw std::out_of_range("Cannot add from out of range.");
     }
 
     Node<T> *temp = new Node<T>;
@@ -323,6 +321,12 @@ void DLList<T>::addTail(T data)
 template <class T>
 void DLList<T>::change(int pos, T data)
 {
+    // if the position is out range
+    if (pos < 0 || pos > sizeOfList - 1 || boundCheck(pos) == false)
+    {
+        throw std::out_of_range("Cannot change out of range.");
+    }
+
     Node<T> *curr = head;
     // iterating to the position
     for (int x = 0; x < pos; x++)
@@ -387,10 +391,9 @@ void DLList<T>::pop(int pos)
 {
     Node<T> *behind = new Node<T>;
     Node<T> *ahead = new Node<T>;
-    if (boundCheck(pos) == false)
+    if (pos < 0 || pos > sizeOfList - 1 || boundCheck(pos) == false)
     {
-        std::cout << "Cant delete, out of range." << std::endl;
-        return;
+        throw std::out_of_range("Cannot pop out of range.");
     }
 
     // when the position is after the tail
@@ -470,7 +473,7 @@ public:
     {
         return l.Size();
     }
-    T operator[](int pos)
+    T &operator[](int pos)
     {
         return l[pos];
     }
@@ -509,7 +512,7 @@ public:
     {
         return l.Size();
     }
-    T operator[](int pos)
+    T &operator[](int pos)
     {
         return l[pos];
     }
