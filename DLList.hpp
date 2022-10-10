@@ -79,6 +79,12 @@ public:
      */
     T &operator[](int index);
     /**
+     * @brief overloads the += operator to append a list to the list
+     *
+     * @param data
+     */
+    void operator+=(DLList<T> &list);
+    /**
      * @brief overloads the += operator to append to the list
      *
      * @param data
@@ -165,6 +171,15 @@ void DLList<T>::operator=(DLList<T> &list)
         return;
     this->~DLList();                          // deallocate the memory of the current list
     DLList<T> *temp = new (this) DLList<T>(); // reconstruct the list
+    for (int i = 0; i < list.Size(); i++)
+    {
+        this->append(list[i]); // append the elements of the list
+    }
+};
+
+template <class T>
+void DLList<T>::operator+=(DLList<T> &list)
+{
     for (int i = 0; i < list.Size(); i++)
     {
         this->append(list[i]); // append the elements of the list
