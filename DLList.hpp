@@ -298,14 +298,8 @@ template <class T>
 DLList<T> DLList<T>::operator+(DLList<T> &list)
 {
     DLList<T> temp;
-    for (int i = 0; i < this->Size(); i++)
-    {
-        temp.append(this->operator[](i));
-    }
-    for (int i = 0; i < list.Size(); i++)
-    {
-        temp.append(list[i]);
-    }
+    temp += *this;
+    temp += list;
     return temp;
 }
 
