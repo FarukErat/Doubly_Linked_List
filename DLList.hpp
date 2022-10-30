@@ -79,6 +79,7 @@ public:
      */
     T &operator[](int index);
     DLList<T> operator+(DLList<T> &list);
+    DLList<T> operator+(T data);
     /**
      * @brief overloads the += operator to append a list to the list
      *
@@ -158,6 +159,8 @@ public:
      */
     template <class U>
     friend std::istream &operator>>(std::istream &in, DLList<U> &list);
+    template <class U>
+    friend DLList<U> operator+(U data, DLList<U> &list);
 };
 
 template <class T>
@@ -294,6 +297,24 @@ DLList<T> DLList<T>::operator+(DLList<T> &list)
 {
     DLList<T> temp;
     temp += *this;
+    temp += list;
+    return temp;
+}
+
+template <class T>
+DLList<T> DLList<T>::operator+(T data)
+{
+    DLList<T> temp;
+    temp += *this;
+    temp += data;
+    return temp;
+}
+
+template <class U>
+DLList<U> operator+(U data, DLList<U> &list)
+{
+    DLList<U> temp;
+    temp += data;
     temp += list;
     return temp;
 }
