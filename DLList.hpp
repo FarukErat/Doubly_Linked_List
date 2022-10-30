@@ -134,11 +134,6 @@ public:
      */
     void pop();
     /**
-     * @brief prints the elements of the list
-     *
-     */
-    void printDLList(char delimiter = ' ');
-    /**
      * @brief returns the size of the list
      *
      * @return int
