@@ -21,7 +21,7 @@ template <class T>
  */
 class DLList
 {
-protected:
+private:
     int sizeOfList;
     Node<T> *head; // the address of the first node
     Node<T> *tail; // the address of the last node
