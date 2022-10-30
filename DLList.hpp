@@ -78,6 +78,7 @@ public:
      * @return T
      */
     T &operator[](int index);
+    DLList<T> operator+(DLList<T> &list);
     /**
      * @brief overloads the += operator to append a list to the list
      *
@@ -292,6 +293,21 @@ T &DLList<T>::operator[](int index)
     }
     return ptr->data; // return the data of the node
 };
+
+template <class T>
+DLList<T> DLList<T>::operator+(DLList<T> &list)
+{
+    DLList<T> temp;
+    for (int i = 0; i < this->Size(); i++)
+    {
+        temp.append(this->operator[](i));
+    }
+    for (int i = 0; i < list.Size(); i++)
+    {
+        temp.append(list[i]);
+    }
+    return temp;
+}
 
 template <class T>
 void DLList<T>::append(T data)
