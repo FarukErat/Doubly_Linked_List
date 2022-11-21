@@ -1,6 +1,6 @@
 #pragma once
-#ifndef DLList_H
-#define DLList_H
+#ifndef DLList_HPP
+#define DLList_HPP
 
 template <class T>
 /**
@@ -464,4 +464,4 @@ bool DLList<T>::boundCheck(int index)
     }
     return true;
 };
-#endif //! DLList_H
+#endif //! DLList_HPP
