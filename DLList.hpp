@@ -34,30 +34,6 @@ private:
      */
     bool boundCheck(int index);
 
-    // the following functions are not for public use
-    /**
-     * @brief adds a node at the beginning of the list
-     *
-     * @param data
-     */
-    void addHead(T data);
-    /**
-     * @brief adds a node at the end of the list
-     *
-     * @param data
-     */
-    void addTail(T data);
-    /**
-     * @brief deletes the first node
-     *
-     */
-    void delHead();
-    /**
-     * @brief deletes the last node
-     *
-     */
-    void delTail();
-
 public:
     T input; // for users not to have to declare a new variable while inputting
     /**
@@ -317,6 +293,7 @@ DLList<U> operator+(U data, DLList<U> &list)
 template <class T>
 void DLList<T>::insert(T data, int index)
 {
+    // list is empty
     if (head == nullptr)
     {
         // new node is created
@@ -334,13 +311,25 @@ void DLList<T>::insert(T data, int index)
     // it means it is head, if position is 0
     if (index == 0)
     {
-        addHead(data);
+        Node<T> *temp = new Node<T>; // a new node is created
+        temp->data = data;           // its data is assigned
+        temp->next = head;           // the next node of temp is assigned as head
+        temp->prev = nullptr;        // the previous node of temp is assigned as nullptr
+        head->prev = temp;           // the previous node of the former head node is assigned as temp
+        head = temp;                 // head node is updated to temp
+        size++;
         return;
     }
     // it means it is tail, if position is sizeOfList
     else if (index == size)
     {
-        addTail(data);
+        Node<T> *newNode = new Node<T>; // a new node is created
+        newNode->data = data;           // its data is assigned
+        newNode->prev = tail;           // the previous node of temp is assigned as tail
+        newNode->next = nullptr;        // the next node of temp node is assigned as nullptr
+        tail->next = newNode;           // the next node of former tail node is assigned as temp
+        tail = newNode;                 // tail node is updated
+        size++;
         return;
     }
     else
@@ -374,80 +363,6 @@ void DLList<T>::append(T data)
 }
 
 template <class T>
-void DLList<T>::addHead(T data)
-{
-    Node<T> *temp = new Node<T>; // a new node is created
-    temp->data = data;           // its data is assigned
-    temp->next = head;           // the next node of temp is assigned as head
-    temp->prev = nullptr;        // the previous node of temp is assigned as nullptr
-    head->prev = temp;           // the previous node of the former head node is assigned as temp
-    head = temp;                 // head node is updated to temp
-    size++;
-};
-
-template <class T>
-void DLList<T>::addTail(T data)
-{
-    Node<T> *newNode = new Node<T>; // a new node is created
-    newNode->data = data;           // its data is assigned
-    newNode->prev = tail;           // the previous node of temp is assigned as tail
-    tail->next = newNode;           // the next node of former tail node is assigned as temp
-    newNode->next = nullptr;        // the next node of temp node is assigned as nullptr
-    tail = newNode;                 // tail node is updated
-    size++;
-};
-
-template <class T>
-void DLList<T>::delHead()
-{
-    Node<T> *temp = new Node<T>;
-    if (size == 0)
-    {
-        std::cout << "Out of bound! From head." << std::endl;
-        return;
-    }
-    // if there is only one node
-    if (head->next == nullptr)
-    {
-        head = nullptr;
-        size--;
-    }
-    else
-    {
-        temp = head->next; // head is moved one node further
-        temp->prev = nullptr;
-        delete head;
-        head = temp; // head is updated to temp
-        size--;
-    }
-};
-
-template <class T>
-void DLList<T>::delTail()
-{
-    Node<T> *temp = new Node<T>;
-    if (size == 0)
-    {
-        std::cout << "Out of bound! From tail." << std::endl;
-        return;
-    }
-    // if there is only one node
-    if (tail->prev == nullptr)
-    {
-        tail = nullptr;
-        size--;
-    }
-    else
-    {
-        temp = tail->prev; // tail is moved one node back
-        temp->next = nullptr;
-        delete tail;
-        tail = temp; // tail is updated to temp
-        size--;
-    }
-};
-
-template <class T>
 void DLList<T>::remove(int index)
 {
     Node<T> *behind = new Node<T>;
@@ -460,14 +375,52 @@ void DLList<T>::remove(int index)
     // when the position is after the tail
     if (index == size - 1)
     {
-        delTail();
+        Node<T> *temp = new Node<T>;
+        if (size == 0)
+        {
+            std::cout << "Out of bound! From tail." << std::endl;
+            return;
+        }
+        // if there is only one node
+        if (tail->prev == nullptr)
+        {
+            tail = nullptr;
+            size--;
+        }
+        else
+        {
+            temp = tail->prev; // tail is moved one node back
+            temp->next = nullptr;
+            delete tail;
+            tail = temp; // tail is updated to temp
+            size--;
+        }
         return;
     }
 
     // when the position is before head
     if (index == 0)
     {
-        delHead();
+        Node<T> *temp = new Node<T>;
+        if (size == 0)
+        {
+            std::cout << "Out of bound! From head." << std::endl;
+            return;
+        }
+        // if there is only one node
+        if (head->next == nullptr)
+        {
+            head = nullptr;
+            size--;
+        }
+        else
+        {
+            temp = head->next; // head is moved one node further
+            temp->prev = nullptr;
+            delete head;
+            head = temp; // head is updated to temp
+            size--;
+        }
         return;
     }
 
