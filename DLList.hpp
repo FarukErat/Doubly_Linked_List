@@ -32,7 +32,8 @@ public:
     void insert(T data, int index);
     void append(T data);
     void remove(int index);
-    void pop();
+
+    T pop();
 
     T &operator[](int index);
 
@@ -155,6 +156,14 @@ void DLList<T>::remove(int index)
     if (!boundCheck(index))
         return;
     Node<T> *ptr;
+    if (size == 1)
+    {
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+        size--;
+        return;
+    }
     if (index < size / 2)
     {
         ptr = head;
@@ -176,12 +185,12 @@ void DLList<T>::remove(int index)
         head = ptr->next;
         head->prev = nullptr;
     }
-    else if (ptr->next == nullptr)
+    if (ptr->next == nullptr)
     {
         tail = ptr->prev;
         tail->next = nullptr;
     }
-    else
+    if (ptr->prev != nullptr && ptr->next != nullptr)
     {
         ptr->prev->next = ptr->next;
         ptr->next->prev = ptr->prev;
@@ -191,9 +200,11 @@ void DLList<T>::remove(int index)
 };
 
 template <typename T>
-void DLList<T>::pop()
+T DLList<T>::pop()
 {
+    T data = tail->data;
     remove(size - 1);
+    return data;
 };
 
 /* I N D E X */
