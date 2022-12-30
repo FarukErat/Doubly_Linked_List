@@ -23,12 +23,7 @@ private:
 
 public:
     T input;
-    DLList()
-    {
-        head = nullptr;
-        tail = nullptr;
-        size = 0;
-    };
+    DLList(){};
     DLList(std::initializer_list<T> const l);
     ~DLList();
 
@@ -72,9 +67,6 @@ bool DLList<T>::boundCheck(int index)
 template <class T>
 DLList<T>::DLList(std::initializer_list<T> const l)
 {
-    size = 0;
-    head = nullptr;
-    tail = nullptr;
     for (auto i : l)
     {
         this->append(i);
