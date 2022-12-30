@@ -1,5 +1,3 @@
-// TODO: use tail effectively if index is closer to tail than head
-
 #pragma once
 #ifndef DLLIST_HPP
 #define DLLIST_HPP
@@ -154,35 +152,42 @@ void DLList<T>::append(T data)
 template <typename T>
 void DLList<T>::remove(int index)
 {
-    if (boundCheck(index))
+    if (!boundCheck(index))
+        return;
+    Node<T> *ptr;
+    if (index < size / 2)
     {
-        Node<T> *ptr = head;
+        ptr = head;
         for (int i = 0; i < index; i++)
         {
             ptr = ptr->next;
         }
-        if (ptr->prev == nullptr)
-        {
-            head = ptr->next;
-            head->prev = nullptr;
-        }
-        else if (ptr->next == nullptr)
-        {
-            tail = ptr->prev;
-            tail->next = nullptr;
-        }
-        else
-        {
-            ptr->prev->next = ptr->next;
-            ptr->next->prev = ptr->prev;
-        }
-        delete ptr;
-        size--;
     }
     else
     {
-        std::cout << "Index out of bounds" << std::endl;
+        ptr = tail;
+        for (int i = size - 1; i > index; i--)
+        {
+            ptr = ptr->prev;
+        }
     }
+    if (ptr->prev == nullptr)
+    {
+        head = ptr->next;
+        head->prev = nullptr;
+    }
+    else if (ptr->next == nullptr)
+    {
+        tail = ptr->prev;
+        tail->next = nullptr;
+    }
+    else
+    {
+        ptr->prev->next = ptr->next;
+        ptr->next->prev = ptr->prev;
+    }
+    delete ptr;
+    size--;
 };
 
 template <typename T>
@@ -199,10 +204,22 @@ T &DLList<T>::operator[](int index)
     {
         throw std::out_of_range("Index out of bound.");
     }
-    Node<T> *ptr = head;
-    for (int i = 0; i < index; i++)
+    Node<T> *ptr;
+    if (index < size / 2)
     {
-        ptr = ptr->next;
+        ptr = head;
+        for (int i = 0; i < index; i++)
+        {
+            ptr = ptr->next;
+        }
+    }
+    else
+    {
+        ptr = tail;
+        for (int i = size - 1; i > index; i--)
+        {
+            ptr = ptr->prev;
+        }
     }
     return ptr->data;
 };
