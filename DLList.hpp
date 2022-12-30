@@ -122,10 +122,22 @@ void DLList<T>::insert(T data, int index)
     {
         newNode->next = nullptr;
         newNode->prev = nullptr;
-        Node<T> *ptr = head;
-        for (int i = 0; i < index; i++)
+        Node<T> *ptr = nullptr;
+        if (index < size / 2)
         {
-            ptr = ptr->next;
+            ptr = head;
+            for (int i = 0; i < index; i++)
+            {
+                ptr = ptr->next;
+            }
+        }
+        else
+        {
+            ptr = tail;
+            for (int i = size - 1; i > index; i--)
+            {
+                ptr = ptr->prev;
+            }
         }
         newNode->next = ptr;
         newNode->prev = ptr->prev;
