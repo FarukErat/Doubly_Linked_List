@@ -1,10 +1,12 @@
+// TODO: use tail effectively if index is closer to tail than head
+
 #pragma once
 #ifndef DLLIST_HPP
 #define DLLIST_HPP
 
 #include <iostream>
 
-template <class T>
+template <typename T>
 class Node
 {
 public:
@@ -12,7 +14,7 @@ public:
     Node<T> *next = nullptr;
     Node<T> *prev = nullptr;
 };
-template <class T>
+template <typename T>
 class DLList
 {
 private:
@@ -43,13 +45,13 @@ public:
     void operator+=(DLList<T> &list);
     void operator+=(std::initializer_list<T> const l);
 
-    template <class U>
+    template <typename U>
     friend std::ostream &operator<<(std::ostream &out, DLList<U> &list);
-    template <class U>
+    template <typename U>
     friend std::istream &operator>>(std::istream &in, DLList<U> &list);
 };
 
-template <class T>
+template <typename T>
 bool DLList<T>::boundCheck(int index)
 {
     Node<T> *iter = head;
@@ -64,7 +66,7 @@ bool DLList<T>::boundCheck(int index)
     return true;
 };
 
-template <class T>
+template <typename T>
 DLList<T>::DLList(std::initializer_list<T> const l)
 {
     for (auto i : l)
@@ -72,7 +74,7 @@ DLList<T>::DLList(std::initializer_list<T> const l)
         this->append(i);
     }
 };
-template <class T>
+template <typename T>
 DLList<T>::~DLList()
 {
     Node<T> *ptr = head;
@@ -84,7 +86,7 @@ DLList<T>::~DLList()
     }
 };
 
-template <class T>
+template <typename T>
 void DLList<T>::insert(T data, int index)
 {
     Node<T> *newNode = new Node<T>;
@@ -132,12 +134,12 @@ void DLList<T>::insert(T data, int index)
         size++;
     }
 };
-template <class T>
+template <typename T>
 void DLList<T>::append(T data)
 {
     insert(data, size);
 }
-template <class T>
+template <typename T>
 void DLList<T>::remove(int index)
 {
     if (boundCheck(index))
@@ -171,14 +173,14 @@ void DLList<T>::remove(int index)
     }
 };
 
-template <class T>
+template <typename T>
 void DLList<T>::pop()
 {
     remove(size - 1);
 };
 
 /* I N D E X */
-template <class T>
+template <typename T>
 T &DLList<T>::operator[](int index)
 {
     if (index >= size || boundCheck(index) == false)
@@ -194,7 +196,7 @@ T &DLList<T>::operator[](int index)
 };
 
 /* A S S I G N M E N T */
-template <class T>
+template <typename T>
 void DLList<T>::operator=(DLList<T> &list)
 {
     if (this == &list)
@@ -206,7 +208,7 @@ void DLList<T>::operator=(DLList<T> &list)
         this->append(list[i]);
     }
 };
-template <class T>
+template <typename T>
 void DLList<T>::operator=(std::initializer_list<T> const l)
 {
     this->~DLList();
@@ -218,12 +220,12 @@ void DLList<T>::operator=(std::initializer_list<T> const l)
 };
 
 /* P L U S   E Q U A L S */
-template <class T>
+template <typename T>
 void DLList<T>::operator+=(T data)
 {
     this->append(data);
 };
-template <class T>
+template <typename T>
 void DLList<T>::operator+=(DLList<T> &list)
 {
     for (int i = 0; i < list.getSize(); i++)
@@ -231,7 +233,7 @@ void DLList<T>::operator+=(DLList<T> &list)
         this->append(list[i]);
     }
 };
-template <class T>
+template <typename T>
 void DLList<T>::operator+=(std::initializer_list<T> const l)
 {
     for (auto i : l)
@@ -241,7 +243,7 @@ void DLList<T>::operator+=(std::initializer_list<T> const l)
 };
 
 /* L E F T   S H I F T */
-template <class T>
+template <typename T>
 std::ostream &operator<<(std::ostream &out, DLList<T> &list)
 {
     for (int i = 0; i < list.getSize(); i++)
@@ -252,7 +254,7 @@ std::ostream &operator<<(std::ostream &out, DLList<T> &list)
 };
 
 /* R I G H T   S H I F T */
-template <class T>
+template <typename T>
 std::istream &operator>>(std::istream &in, DLList<T> &list)
 {
     T data;
