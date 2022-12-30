@@ -1,213 +1,72 @@
 #pragma once
-#ifndef DLList_HPP
-#define DLList_HPP
+#ifndef DLLIST_HPP
+#define DLLIST_HPP
+
+#include <iostream>
 
 template <class T>
-/**
- * @brief Monomere of the list structure
- *
- */
-struct Node
+class Node
 {
-    T data;        // data to be stored
-    Node<T> *next; // the pointer pointing the next node
-    Node<T> *prev; // the pointer pointing the previous node
+public:
+    T data;
+    Node<T> *next = nullptr;
+    Node<T> *prev = nullptr;
 };
-
 template <class T>
-/**
- * @brief Doubly linked list of any type
- *
- */
 class DLList
 {
 private:
     int size = 0;
-    Node<T> *head = nullptr; // the address of the first node
-    Node<T> *tail = nullptr; // the address of the last node
-    /**
-     * @brief checks if there is boundary violation
-     *
-     * @param index
-     * @return true
-     * @return false
-     */
+    Node<T> *head = nullptr;
+    Node<T> *tail = nullptr;
     bool boundCheck(int index);
 
 public:
-    T input; // for users not to have to declare a new variable while inputting
-    /**
-     * @brief Constructs a new DLList object
-     *
-     */
-    DLList();
+    T input;
+    DLList()
+    {
+        head = nullptr;
+        tail = nullptr;
+        size = 0;
+    };
     DLList(std::initializer_list<T> const l);
-    /**
-     * @brief Destroys the DLList object
-     *
-     */
     ~DLList();
-    /**
-     * @brief returns the data of the node at the given index
-     *
-     * @param index
-     * @return T
-     */
-    T &operator[](int index);
-    DLList<T> operator+(DLList<T> &list);
-    DLList<T> operator+(T data);
-    /**
-     * @brief overloads the += operator to append a list to the list
-     *
-     * @param data
-     */
-    void operator+=(DLList<T> &list);
-    /**
-     * @brief overloads the += operator to append to the list
-     *
-     * @param data
-     */
-    void operator+=(T data);
-    /**
-     * @brief overloads the += operator to append a list to the list
-     *
-     * @param l
-     */
-    void operator+=(std::initializer_list<T> const l);
-    /**
-     * @brief clones the list
-     *
-     * @param list
-     */
-    void operator=(DLList<T> &list);
-    /**
-     * @brief resets the list and appends a list to the list
-     *
-     * @param l
-     */
-    void operator=(std::initializer_list<T> const l);
-    /**
-     * @brief inserts a node at the given index
-     *
-     * @param index
-     * @param data
-     */
+
+    int getSize() const { return size; }; /* read-only */
+
     void insert(T data, int index);
     void append(T data);
-    /**
-     * @brief deletes the node at the given index but does not return the data
-     *
-     * @param index
-     */
     void remove(int index);
-    /**
-     * @brief deletes the last node
-     *
-     */
     void pop();
-    /**
-     * @brief returns the size of the list
-     *
-     * @return int
-     */
-    int getSize();
-    /**
-     * @brief enables the user to print list with ease
-     *
-     * @param out
-     * @param list
-     *
-     * @return std::ostream&
-     */
-    template <class U> // different type name in order to avoid shadowing the function in the class
+
+    T &operator[](int index);
+
+    void operator=(DLList<T> &list);
+    void operator=(std::initializer_list<T> const l);
+
+    void operator+=(T data);
+    void operator+=(DLList<T> &list);
+    void operator+=(std::initializer_list<T> const l);
+
+    template <class U>
     friend std::ostream &operator<<(std::ostream &out, DLList<U> &list);
-    /**
-     * @brief enables user to imput and append to the list with ease
-     *
-     * @param in
-     * @param list
-     * @return std::istream&
-     */
     template <class U>
     friend std::istream &operator>>(std::istream &in, DLList<U> &list);
-    template <class U>
-    friend DLList<U> operator+(U data, DLList<U> &list);
 };
 
 template <class T>
-void DLList<T>::operator=(DLList<T> &list)
+bool DLList<T>::boundCheck(int index)
 {
-    if (this == &list)
-        return;
-    this->~DLList();                          // deallocate the memory of the current list
-    DLList<T> *temp = new (this) DLList<T>(); // reconstruct the list
-    for (int i = 0; i < list.getSize(); i++)
+    Node<T> *iter = head;
+    for (int i = 0; i < index; i++)
     {
-        this->append(list[i]); // append the elements of the list
+        if (iter == NULL)
+        {
+            return false;
+        }
+        iter = iter->next;
     }
-};
-
-template <class T>
-void DLList<T>::operator+=(DLList<T> &list)
-{
-    for (int i = 0; i < list.getSize(); i++)
-    {
-        this->append(list[i]); // append the elements of the list
-    }
-};
-
-template <class T>
-void DLList<T>::operator=(std::initializer_list<T> const l)
-{
-    this->~DLList();                          // deallocate the memory of the current list
-    DLList<T> *temp = new (this) DLList<T>(); // reconstruct the list
-    for (auto i : l)
-    {
-        this->append(i); // append the elements of the list
-    }
-};
-
-template <class T>
-void DLList<T>::operator+=(T data)
-{
-    this->append(data);
-};
-
-template <class T>
-void DLList<T>::operator+=(std::initializer_list<T> const l)
-{
-    for (auto i : l)
-    {
-        this->append(i);
-    }
-};
-
-template <class T>
-std::ostream &operator<<(std::ostream &out, DLList<T> &list)
-{
-    for (int i = 0; i < list.getSize(); i++)
-    {
-        out << list[i] << ' ';
-    }
-    out << std::endl;
-    return out;
-};
-
-template <class T>
-std::istream &operator>>(std::istream &in, DLList<T> &list)
-{
-    T data;
-    in >> data;
-    list.append(data);
-    return in;
-};
-
-template <class T>
-DLList<T>::DLList()
-{
-    size = 0;       // initialize the size of the list to 0
-    head = nullptr; // initialize the head pointer to nullptr
-    tail = nullptr; // initialize the tail pointer to nullptr
+    return true;
 };
 
 template <class T>
@@ -221,86 +80,25 @@ DLList<T>::DLList(std::initializer_list<T> const l)
         this->append(i);
     }
 };
-
 template <class T>
 DLList<T>::~DLList()
 {
-    // if head is nullptr, then head is the tail and they are all to be deleted
-    if (head == nullptr)
+    Node<T> *ptr = head;
+    while (ptr != nullptr)
     {
-        delete head;
-        return;
+        Node<T> *temp = ptr;
+        ptr = ptr->next;
+        delete temp;
     }
-
-    Node<T> *curr = new Node<T>;         // create a pointer to the current node
-    Node<T> *nodeToRemove = new Node<T>; // create a pointer to the node to be removed
-    curr = head;                         // set the pointer to the head to start from the beginning
-    // while the current node is not nullptr
-    while (curr->next != nullptr)
-    {
-        nodeToRemove = curr; // set the node to be removed to the current node
-        curr = curr->next;   // move the current node to the next node
-        delete nodeToRemove; // delete the node to be removed
-    }
-    delete curr; // delete the last node
 };
-
-template <class T>
-T &DLList<T>::operator[](int index)
-{
-    // check if the index is out of bound
-    if (index >= size || boundCheck(index) == false)
-    {
-        throw std::out_of_range("Index out of bound.");
-    }
-
-    // iterate through the list to find the index
-    Node<T> *ptr = head; // set the pointer to the head to start from the beginning
-    for (int i = 0; i < index; i++)
-    {
-        ptr = ptr->next; // move the pointer to the next node
-    }
-    return ptr->data; // return the data of the node
-};
-
-template <class T>
-DLList<T> DLList<T>::operator+(DLList<T> &list)
-{
-    DLList<T> temp;
-    temp += *this;
-    temp += list;
-    return temp;
-}
-
-template <class T>
-DLList<T> DLList<T>::operator+(T data)
-{
-    DLList<T> temp;
-    temp += *this;
-    temp += data;
-    return temp;
-}
-
-template <class U>
-DLList<U> operator+(U data, DLList<U> &list)
-{
-    DLList<U> temp;
-    temp += data;
-    temp += list;
-    return temp;
-}
 
 template <class T>
 void DLList<T>::insert(T data, int index)
 {
-    // list is empty
+    Node<T> *newNode = new Node<T>;
+    newNode->data = data;
     if (head == nullptr)
     {
-        // new node is created
-        Node<T> *newNode = new Node<T>;
-
-        // new node is initialized
-        newNode->data = data;
         newNode->next = nullptr;
         newNode->prev = nullptr;
         head = newNode;
@@ -308,134 +106,77 @@ void DLList<T>::insert(T data, int index)
         size++;
         return;
     }
-    // it means it is head, if position is 0
     if (index == 0)
     {
-        Node<T> *temp = new Node<T>; // a new node is created
-        temp->data = data;           // its data is assigned
-        temp->next = head;           // the next node of temp is assigned as head
-        temp->prev = nullptr;        // the previous node of temp is assigned as nullptr
-        head->prev = temp;           // the previous node of the former head node is assigned as temp
-        head = temp;                 // head node is updated to temp
+        newNode->next = head;
+        newNode->prev = nullptr;
+        head->prev = newNode;
+        head = newNode;
         size++;
         return;
     }
-    // it means it is tail, if position is sizeOfList
     else if (index == size)
     {
-        Node<T> *newNode = new Node<T>; // a new node is created
-        newNode->data = data;           // its data is assigned
-        newNode->prev = tail;           // the previous node of temp is assigned as tail
-        newNode->next = nullptr;        // the next node of temp node is assigned as nullptr
-        tail->next = newNode;           // the next node of former tail node is assigned as temp
-        tail = newNode;                 // tail node is updated
+        newNode->prev = tail;
+        newNode->next = nullptr;
+        tail->next = newNode;
+        tail = newNode;
         size++;
         return;
     }
     else
     {
-        // new node is created
-        Node<T> *newNode = new Node<T>;
-
-        // new node is initialized
-        newNode->data = data;
         newNode->next = nullptr;
         newNode->prev = nullptr;
-
-        // iterate through the list to find the index
-        Node<T> *ptr = head; // set the pointer to the head to start from the beginning
+        Node<T> *ptr = head;
         for (int i = 0; i < index; i++)
         {
-            ptr = ptr->next; // move the pointer to the next node
+            ptr = ptr->next;
         }
-        newNode->next = ptr;       // new node's next node is assigned as ptr
-        newNode->prev = ptr->prev; // new node's previous node is assigned as ptr's previous node
-        ptr->prev->next = newNode; // ptr's previous node's next node is assigned as new node
-        ptr->prev = newNode;       // ptr's previous node is assigned as new node
+        newNode->next = ptr;
+        newNode->prev = ptr->prev;
+        ptr->prev->next = newNode;
+        ptr->prev = newNode;
         size++;
     }
 };
-
 template <class T>
 void DLList<T>::append(T data)
 {
     insert(data, size);
 }
-
 template <class T>
 void DLList<T>::remove(int index)
 {
-    Node<T> *behind = new Node<T>;
-    Node<T> *ahead = new Node<T>;
-    if (index < 0 || index > size - 1 || boundCheck(index) == false)
+    if (boundCheck(index))
     {
-        throw std::out_of_range("Cannot pop out of range.");
-    }
-
-    // when the position is after the tail
-    if (index == size - 1)
-    {
-        Node<T> *temp = new Node<T>;
-        if (size == 0)
+        Node<T> *ptr = head;
+        for (int i = 0; i < index; i++)
         {
-            std::cout << "Out of bound! From tail." << std::endl;
-            return;
+            ptr = ptr->next;
         }
-        // if there is only one node
-        if (tail->prev == nullptr)
+        if (ptr->prev == nullptr)
         {
-            tail = nullptr;
-            size--;
+            head = ptr->next;
+            head->prev = nullptr;
+        }
+        else if (ptr->next == nullptr)
+        {
+            tail = ptr->prev;
+            tail->next = nullptr;
         }
         else
         {
-            temp = tail->prev; // tail is moved one node back
-            temp->next = nullptr;
-            delete tail;
-            tail = temp; // tail is updated to temp
-            size--;
+            ptr->prev->next = ptr->next;
+            ptr->next->prev = ptr->prev;
         }
-        return;
+        delete ptr;
+        size--;
     }
-
-    // when the position is before head
-    if (index == 0)
+    else
     {
-        Node<T> *temp = new Node<T>;
-        if (size == 0)
-        {
-            std::cout << "Out of bound! From head." << std::endl;
-            return;
-        }
-        // if there is only one node
-        if (head->next == nullptr)
-        {
-            head = nullptr;
-            size--;
-        }
-        else
-        {
-            temp = head->next; // head is moved one node further
-            temp->prev = nullptr;
-            delete head;
-            head = temp; // head is updated to temp
-            size--;
-        }
-        return;
+        std::cout << "Index out of bounds" << std::endl;
     }
-
-    ahead = head;
-    for (int i = 0; i < index; i++)
-    {
-        behind = ahead;
-        ahead = ahead->next;
-    }
-
-    behind->next = ahead->next;
-    ahead->next->prev = behind;
-
-    delete ahead;
-    size--;
 };
 
 template <class T>
@@ -444,24 +185,88 @@ void DLList<T>::pop()
     remove(size - 1);
 };
 
+/* I N D E X */
 template <class T>
-int DLList<T>::getSize()
+T &DLList<T>::operator[](int index)
 {
-    return size; // since size attribute is private
-};
-
-template <class T>
-bool DLList<T>::boundCheck(int index)
-{
-    Node<T> *iter = head; // checking if there is any gaps(NULL nodes)
+    if (index >= size || boundCheck(index) == false)
+    {
+        throw std::out_of_range("Index out of bound.");
+    }
+    Node<T> *ptr = head;
     for (int i = 0; i < index; i++)
     {
-        if (iter == NULL)
-        {
-            return false;
-        }
-        iter = iter->next;
+        ptr = ptr->next;
     }
-    return true;
+    return ptr->data;
 };
-#endif //! DLList_HPP
+
+/* A S S I G N M E N T */
+template <class T>
+void DLList<T>::operator=(DLList<T> &list)
+{
+    if (this == &list)
+        return;
+    this->~DLList();
+    DLList<T> *temp = new (this) DLList<T>(); /* implicitly reconstructing */
+    for (int i = 0; i < list.getSize(); i++)
+    {
+        this->append(list[i]);
+    }
+};
+template <class T>
+void DLList<T>::operator=(std::initializer_list<T> const l)
+{
+    this->~DLList();
+    DLList<T> *temp = new (this) DLList<T>();
+    for (auto i : l)
+    {
+        this->append(i);
+    }
+};
+
+/* P L U S   E Q U A L S */
+template <class T>
+void DLList<T>::operator+=(T data)
+{
+    this->append(data);
+};
+template <class T>
+void DLList<T>::operator+=(DLList<T> &list)
+{
+    for (int i = 0; i < list.getSize(); i++)
+    {
+        this->append(list[i]);
+    }
+};
+template <class T>
+void DLList<T>::operator+=(std::initializer_list<T> const l)
+{
+    for (auto i : l)
+    {
+        this->append(i);
+    }
+};
+
+/* L E F T   S H I F T */
+template <class T>
+std::ostream &operator<<(std::ostream &out, DLList<T> &list)
+{
+    for (int i = 0; i < list.getSize(); i++)
+    {
+        out << list[i] << ' ';
+    }
+    return out;
+};
+
+/* R I G H T   S H I F T */
+template <class T>
+std::istream &operator>>(std::istream &in, DLList<T> &list)
+{
+    T data;
+    in >> data;
+    list.append(data);
+    return in;
+};
+
+#endif // DLLIST_HPP
