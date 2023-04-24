@@ -35,7 +35,7 @@ public:
     void insert(T data, int index);
     void append(T data);
     void remove(int index);
-    void removeByVal(T data);
+    bool removeByVal(T data);
 
     T pop();
 
@@ -178,15 +178,16 @@ void DLList<T>::remove(int index) {
 };
 
 template <typename T>
-void DLList<T>::removeByVal(T data){
+bool DLList<T>::removeByVal(T data) {
     Node<T>* ptr = head;
     for (int i = 0; i < size; i++) {
         if (ptr->data == data) {
             remove(i);
-            return;
+            return true;
         }
         ptr = ptr->next;
     }
+    return false;
 };
 
 template <typename T>
