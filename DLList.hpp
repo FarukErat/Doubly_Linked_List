@@ -56,7 +56,7 @@ bool DLList<T>::boundCheck(int index)
     Node<T> *iter = head;
     for (int i = 0; i < index; i++)
     {
-        if (iter == NULL)
+        if (iter == nullptr)
         {
             return false;
         }
