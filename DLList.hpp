@@ -36,6 +36,7 @@ public:
     void append(T data);
     void remove(int index);
     bool removeByVal(T data);
+    bool contains(T data);
 
     T pop();
 
@@ -183,6 +184,18 @@ bool DLList<T>::removeByVal(T data) {
     for (int i = 0; i < size; i++) {
         if (ptr->data == data) {
             remove(i);
+            return true;
+        }
+        ptr = ptr->next;
+    }
+    return false;
+};
+
+template <typename T>
+bool DLList<T>::contains(T data) {
+    Node<T>* ptr = head;
+    for (int i = 0; i < size; i++) {
+        if (ptr->data == data) {
             return true;
         }
         ptr = ptr->next;
