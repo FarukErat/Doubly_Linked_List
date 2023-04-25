@@ -1,6 +1,6 @@
 #pragma once
-#ifndef DLLIST_HPP
-#define DLLIST_HPP
+#ifndef DLLIST
+#define DLLIST
 
 #include <iostream>
 
@@ -288,4 +288,4 @@ istream& operator>>(istream& in, DLList<T>& list) {
     return in;
 };
 
-#endif // DLLIST_HPP
+#endif // DLLIST
