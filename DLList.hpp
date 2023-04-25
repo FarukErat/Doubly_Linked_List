@@ -53,7 +53,43 @@ public:
     friend ostream& operator<<(ostream& out, DLList<U>& list);
     template <typename U>
     friend istream& operator>>(istream& in, DLList<U>& list);
+
+    class iterator {
+    private:
+        Node<T>* ptr;
+    public:
+        iterator(Node<T>* ptr) : ptr(ptr) {};
+        iterator& operator++() {
+            ptr = ptr->next;
+            return *this;
+        };
+        iterator& operator--() {
+            ptr = ptr->prev;
+            return *this;
+        };
+        bool operator==(iterator& other) {
+            return ptr == other.ptr;
+        };
+        bool operator!=(iterator& other) {
+            return ptr != other.ptr;
+        };
+        T& operator*() {
+            return ptr->data;
+        };
+    };
+    iterator begin();
+    iterator end();
 };
+
+template<typename T>
+typename DLList<T>::iterator DLList<T>::begin() {
+    return iterator(head);
+}
+
+template<typename T>
+typename DLList<T>::iterator DLList<T>::end() {
+    return iterator(nullptr);
+}
 
 template <typename T>
 bool DLList<T>::boundCheck(int index) {
